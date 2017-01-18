@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analytics Demo</title>
+    <script src="realtime.js"></script>
+    <link href='//fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'/>
+    <script type="text/javascript" src="//bitmovin-a.akamaihd.net/bitmovin-player/stable/7/bitmovinplayer.js"></script>
+    <script type="text/javascript" src="//bitmovin-a.akamaihd.net/bitmovin-analytics/stable/1/bitmovinanalytics.min.js"></script>
+    <script src="//code.highcharts.com/highcharts.js"></script>
+    <style>
+        figure {
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            background-color: #22aae2;
+            border: none;
+            color: white;
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #25c0fb;
+        }
+
+        .container {
+            font-family: "Dosis";
+            color: white;
+            text-align: center;
+        }
+
+        .container a {
+            color: white;
+        }
+
+        .container h1 {
+            font: 54px/66px "Dosis";
+            margin-bottom: 22px;
+            line-height: 66px;
+        }
+
+        .container h2 {
+            font-weight: normal;
+            margin-bottom: 36px;
+            line-height: 26px;
+        }
+
+        .description {
+            width: 50%;
+            height: 50px;
+            margin: 40px auto 0;
+        }
+
+        .player-wrapper {
+            width: 50%;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        #webserver-warning {
+            margin: 50px;
+            padding: 20px;
+            background-color: rgba(255, 0, 0, 0.5);
+            display: none;
+        }
+    </style>
+</head>
+<body background="//bitdash-a.akamaihd.net/webpages/bitmovin/images/background.jpg">
+<div class="container">
+    <h1>Developer Analytics for Adaptive Streaming</h1>
+    <h2>
+        Monitor the quality of your service in realtime and spot errors before your users do!</h2>
+    <div id="webserver-warning">
+        <div class="ca-content">
+            <h1>
+                Unsupported Protocol</h1>
+            <h2>
+                This file has been loaded using the unsupported "file" protocol. Please use a <a href="http://wiki.selfhtml.org/wiki/Webserver/lokal" target="_blank">
+                web server</a>
+                and open this page using http or https.</h2>
+        </div>
+    </div>
+    <div class="content">
+        <div class="player-wrapper">
+            <div id="player">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  var BITMOVIN_PLAYER_KEY = '<YOUR PLAYER KEY>';
+  var BITMOVIN_ANALYTICS_KEY = '<YOUR ANALYTICS KEY>';
+
+  (function() {
+    if (location.protocol === "file:") {
+      document.getElementById("webserver-warning").style.display = "block";
+      return;
+    }
+
+    var analyticsConfig = {
+      key           : BITMOVIN_ANALYTICS_KEY,
+      playerKey     : BITMOVIN_PLAYER_KEY,
+      player        : bitmovin.analytics.Players.BITMOVIN,
+      cdnProvider   : bitmovin.analytics.CdnProviders.AKAMAI,
+      userId        : '<USER ID>',
+      videoId       : '<VIDEO ID>',
+      customData1   : {
+        test: 'test'
+      },
+      customData2   : 'customData2',
+      customData3   : 12,
+      experimentName: 'experiment-1'
+    };
+
+    var playerConfig = {
+      key   : BITMOVIN_PLAYER_KEY,
+      source: {
+        dash       : '//bitmovin-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd',
+        hls        : '//bitmovin-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
+        progressive: '//bitmovin-a.akamaihd.net/content/MI201109210084_1/MI201109210084_mpeg-4_hd_high_1080p25_10mbits.mp4',
+        poster     : '//bitmovin-a.akamaihd.net/content/MI201109210084_1/poster.jpg'
+      }
+    };
+
+    var analytics = bitmovin.analytics(analyticsConfig);
+    var player    = bitmovin.player('player');
+    player.setup(playerConfig);
+    analytics.register(player);
+  })();
+</script>
+</body>
+</html>
