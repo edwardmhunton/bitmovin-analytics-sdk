@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analytics Realtime</title>
+    <script src="realtime.js"></script>
+    <link href='//fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'/>
+    <script type="text/javascript" src="//bitmovin-a.akamaihd.net/bitmovin-player/stable/7/bitmovinplayer.js"></script>
+    <script type="text/javascript" src="//bitmovin-a.akamaihd.net/bitmovin-analytics/stable/1/bitmovinanalytics.min.js"></script>
+    <script src="//code.highcharts.com/highcharts.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+    <style>
+        figure {
+            margin: 0;
+            padding: 0;
+        }
+        button {
+            background-color: #22aae2;
+            border: none;
+            color: white;
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #25c0fb;
+        }
+        .container {
+            font-family: "Dosis";
+            color: white;
+            text-align: center;
+        }
+        .container a {
+            color: white;
+        }
+        .container h1 {
+            font: 54px/66px "Dosis";
+            margin-bottom: 22px;
+            line-height: 66px;
+        }
+        .container h2 {
+            font-weight: normal;
+            margin-bottom: 36px;
+            line-height: 26px;
+        }
+        .description {
+            width: 50%;
+            height: 50px;
+            margin: 40px auto 0;
+        }
+        .description button {
+            position: relative;
+            top: -44px;
+            float: right;
+        }
+        .wrapper-closed {
+            display: none;
+        }
+        .player-wrapper {
+            width: 50%;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        #webserver-warning {
+            margin: 50px;
+            padding: 20px;
+            background-color: rgba(255, 0, 0, 0.5);
+            display: none;
+        }
+        #backend-calls {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        table {
+            color: #333;
+            border-collapse: collapse;
+            width: 100%;
+            border-spacing: 0;
+        }
+        td, th {
+            border: 1px solid transparent;
+            height: 30px;
+            transition: all 0.3s;
+        }
+        th {
+            background: #DFDFDF;
+            font-weight: bold;
+        }
+        td {
+            background: #FAFAFA;
+            text-align: center;
+        }
+        tr:nth-child(even) td { background: #F1F1F1; }
+        tr:nth-child(odd) td { background: #FEFEFE; }
+        tr:hover td { background: #dcdcdc; }
+    </style>
+</head>
+<body background="//bitdash-a.akamaihd.net/webpages/bitmovin/images/background.jpg">
+<div class="container">
+    <h1>Developer Analytics for Adaptive Streaming</h1>
+    <h2>
+        Monitor the quality of your service in realtime and spot errors before your users do!</h2>
+    <div id="webserver-warning">
+        <div class="ca-content">
+            <h1>
+                Unsupported Protocol</h1>
+            <h2>
+                This file has been loaded using the unsupported "file" protocol. Please use a <a href="http://wiki.selfhtml.org/wiki/Webserver/lokal" target="_blank">
+                web server</a>
+                and open this page using http or https.</h2>
+        </div>
+    </div>
+    <div class="content">
+        <div class="description">
+            <p>Analytics Infrastructure</p>
+            <button onclick="toggle('analytics-infra-picture-wrapper')">Toggle</button>
+        </div>
+        <div id="analytics-infra-picture-wrapper" class="player-wrapper" style="box-shadow: none">
+            <img src="./analytics-infrastructure.png" width="100%"/>
+        </div>
+        <div class="description">
+            <p>Player connected with Analytics</p>
+        </div>
+        <div class="player-wrapper">
+            <div id="player">
+            </div>
+        </div>
+        <div class="player-wrapper" style="margin-top: 40px">
+            <hr/>
+        </div>
+        <h1>Analytics Data</h1>
+        <h2>All data shown below is queried from the Bitmovin API</h2>
+        <div class="description">
+            <p>Video Statistics</p>
+            <button onclick="toggle('video-information-table-wrapper')">Toggle</button>
+        </div>
+        <div id="video-information-table-wrapper" class="player-wrapper">
+            <table id="video-information-table">
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="description">
+            <p>Client Information</p>
+            <button onclick="toggle('information-wrapper')">Toggle</button>
+        </div>
+        <div id="information-wrapper" class="player-wrapper wrapper-closed">
+            <div class="information">
+                <table id="information-table">
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="description">
+            <p>Adaptation Behaviour Graph</p>
+            <button onclick="toggle('adaptation-behaviour-wrapper')">Toggle</button>
+        </div>
+        <div id="adaptation-behaviour-wrapper" class="player-wrapper" style="margin-top: 30px">
+            <div id="adaptation-behaviour">
+
+            </div>
+        </div>
+        <div class="description">
+            <p>Impression Log</p>
+            <button onclick="toggle('impression-log-wrapper')">Toggle</button>
+        </div>
+        <div id="impression-log-wrapper" class="player-wrapper wrapper-closed" style="margin-top: 30px">
+            <div id="impression-log">
+                <table id="impression-log-table">
+                    <thead>
+                        <tr><th>State</th><th>Player Startuptime</th><th>Video Startuptime</th><th>Duration</th><th>Buffered</th><th>Video Time Start</th><th>Video Time End</th><th>Played</th><th>Paused</th><th>Seeked</th><th>Video Bitrate</th></tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="description">
+            <p>Query responses from Bitmovin API</p>
+            <button onclick="toggle('backend-calls-wrapper')">Toggle</button>
+        </div>
+        <div id="backend-calls-wrapper" class="player-wrapper wrapper-closed" style="margin-top: 30px">
+            <div id="backend-calls">
+                <table id="backend-calls-table">
+                    <tbody style="display: block">
+                        <tr></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var BITMOVIN_API_KEY = '<YOUR API KEY>';
+    var BITMOVIN_PLAYER_KEY = '<YOUR PLAYER KEY>';
+    var BITMOVIN_ANALYTICS_KEY = '<YOUR ANALYTICS KEY>';
+
+    (function() {
+      if (location.protocol === "file:") {
+        document.getElementById("webserver-warning").style.display = "block";
+        return;
+      }
+
+      var realtime = new Realtime();
+      realtime.start();
+    })();
+</script>
+<script>
+  function toggle(divToToggleId) {
+    var div           = document.getElementById(divToToggleId);
+    div.style.display = div.style.display == "none" ? "block" : "none";
+  }
+  (function closeDivs(divs) {
+    for (var i = 0; i < divs.length; i++) {
+      divs[i].style.display = "none";
+    }
+  })(document.getElementsByClassName("wrapper-closed"))
+</script>
+</body>
+</html>
