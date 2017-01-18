@@ -55,3 +55,16 @@ All the metric dimensions listed above cannot only be queried but used for filte
 Size: 6KB
 Can be integrated with any player
 
+## Samples in this Repository
+
+This Repository contains instructions and code samples on how to use and integrate Bitmovin Analytics into your system.
+For a detailed tutorial and getting started guide please look at the [Bitmovin Analytics Tutorial][4]
+
+[simple.html][1] demonstrates how simple it is to integrate the Bitmovin Analytics data collector on your site so it collects Data about the player.
+
+For a demo and code sample of how you can query the collected Analytics Data (in realtime) please look at the [index.html][2] alongside the actual code inside [realtime.js][3].
+
+[1]: https://github.com/bitmovin/bitmovin-analytics-sdk/blob/master/simple.html
+[2]: https://github.com/bitmovin/bitmovin-analytics-sdk/blob/master/index.html
+[3]: https://github.com/bitmovin/bitmovin-analytics-sdk/blob/master/realtime.js
+[4]: https://github.com/bitmovin/bitmovin-analytics-sdk/blob/master/BitmovinAnalyticsTutorial.pdf
