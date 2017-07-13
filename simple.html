@@ -105,18 +105,14 @@
     }
 
     var analyticsConfig = {
-      key           : BITMOVIN_ANALYTICS_KEY,
-      playerKey     : BITMOVIN_PLAYER_KEY,
+      key           : BITMOVIN_ANALYTICS_KEY, // Mandatory
+      playerKey     : BITMOVIN_PLAYER_KEY, // Optional
       player        : bitmovin.analytics.Players.BITMOVIN,
-      cdnProvider   : bitmovin.analytics.CdnProviders.AKAMAI,
-      userId        : '<USER ID>',
-      videoId       : '<VIDEO ID>',
-      customData1   : {
-        test: 'test'
-      },
-      customData2   : 'customData2',
-      customData3   : 12,
-      experimentName: 'experiment-1'
+      cdnProvider   : bitmovin.analytics.CdnProviders.AKAMAI, // Optional if you want to do comparisions of CDNs
+      userId        : '<USER ID>', // Optional: Can be used to identify a user from your system in Analytics data
+      videoId       : '<VIDEO ID>', // Semi-Optional: Highly recommended to supply a unique ID to identify the Video later on
+      customData1   : 'some metadata', // Optional: Can be used to filter later on
+      experimentName: 'experiment-1' // Optional: Can be used to Group/Filter different A/B Tests
     };
 
     var playerConfig = {
