@@ -1,0 +1,15 @@
+{
+  "name": "node-examples",
+  "version": "1.0.0",
+  "description": "This folder shows you some examples on how to query metrics through the JavaScript API Client with the new Fluent Query Builder API.",
+  "main": "impressions.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bitmovin-javascript": "^1.1.5",
+    "moment": "^2.18.1"
+  }
+}
