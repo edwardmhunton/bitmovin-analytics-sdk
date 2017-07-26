@@ -6,7 +6,7 @@ Since out API allows you to filter or group on any field we tracked you can ofte
 For example, let's say you have deployed a new Version of the Player. Analytics will automatically pick up the new Player version and save it.
 So to compare the old with the new Player you just need to query a Metric and `GroupBy` on the `PLAYER_VERSION` field.
 
-Comparing startuptime between Players is as easy as:
+Comparing startuptime between Players using the [Bitmovin Javascript/NodeJs API-Client](https://github.com/bitmovin/bitmovin-javascript)  is as easy as:
 
 ```js
 bitmovin.analytics.queries.builder.median('STARTUPTIME')
