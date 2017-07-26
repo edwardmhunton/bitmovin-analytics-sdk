@@ -54,3 +54,16 @@ bitmovin.analytics.queries.builder.median('VIDEO_STARTUPTIME')
   .filter('VIDEO_STARTUPTIME', 'GT', 0)
   .query()
 ```
+
+We can even `groupBy` multiple variables to for example get a comparison of how the CDN fares either for DASH or HLS:
+
+```js
+bitmovin.analytics.queries.builder.median('VIDEO_STARTUPTIME')
+  .between(moment().startOf('day').toDate(), moment().toDate())
+  .interval('MONTH')
+  .groupBy('CDN_PROVIDER')
+  .groupBy('STREAM_FORMAT')
+  .filter('CDN_PROVIDER', 'EQ', 'us')
+  .filter('VIDEO_STARTUPTIME', 'GT', 0)
+  .query()
+```
