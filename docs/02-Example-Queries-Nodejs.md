@@ -70,8 +70,11 @@ const query = bitmovin.analytics.queries.builder.median('STARTUPTIME')
   .between(moment().startOf('day').toDate(), moment().toDate())
   .interval('MONTH')
   .filter('STARTUPTIME', 'GT', 0)
+  .filter('PAGE_LOAD_TYPE', 'EQ', 1) // Filters only players that didn't load in the background
   .query()
 ```
+
+_**Note**: Chrome delays media loading when a tab is not loaded in the foreground. Analytics detects this and gives you the choice to filter only impressions where the page load was actively impacting the user experience._
 
 `PLAYER_STARTUPTIME` is the time it took the player to load until it reported ready for playback:
 
