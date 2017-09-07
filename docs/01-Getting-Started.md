@@ -12,7 +12,7 @@ var player = bitmovin.player("player");
 var playerConfig = {}; // Set up your Bitmovin Player Configuration
 
 // Instrument the Player with Analytics
-analytics.register(analytics);
+analytics.register(player);
 player.setup(playerConfig);
 ```
 
