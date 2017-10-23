@@ -17,3 +17,14 @@ Or copy the scripts and run:
 $ npm install bitmovin-javascript
 $ npm install moment
 ```
+
+# Examples
+
+There is one interactive example that you can just run directly from the commandline to retrieve StartupTime percentiles in the last week.
+
+```
+$ yarn install
+$ yarn run startuptime
+```
+
+See [startuptime.js](https://github.com/bitmovin/bitmovin-analytics-sdk/blob/master/node-examples/startuptime.js)
