@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Startuptime</title>
+    <script src="./bundle.js"></script>
+    <link href='//fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'/>
+    <script src="//code.highcharts.com/highcharts.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body background="//bitdash-a.akamaihd.net/webpages/bitmovin/images/background.jpg">
+<div class="container">
+    <h1>Startuptime</h1>
+    <h2>See a breakdown of your Startuptime via the Bitmovin Analytics API</h2>
+    <p>Please enter your API Key and hit Load Data to see a graph of the last 7 days of loading times</p>
+    <div>
+      <div>
+        <input type="text" placeholder="Enter your Bitmovin API Key" id="apiKey" />
+      </div>
+      <div>
+        <input type="checkbox" id="includeBackground" /> Include impressions loaded in a background tab
+      </div>
+      <button id="load">Load Data</button>
+    </div>
+    <div id="chart"></div>
+</div>
+</body>
+</html>

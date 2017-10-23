@@ -1,0 +1,100 @@
+figure {
+  margin: 0;
+  padding: 0;
+}
+button {
+  background-color: #22aae2;
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #25c0fb;
+}
+.container {
+  font-family: "Dosis";
+  color: white;
+  text-align: center;
+}
+.container a {
+  color: white;
+}
+.container h1 {
+  font: 54px/66px "Dosis";
+  margin-bottom: 22px;
+  line-height: 66px;
+}
+.container h2 {
+  font-weight: normal;
+  margin-bottom: 36px;
+  line-height: 26px;
+}
+.description {
+  width: 50%;
+  height: 50px;
+  margin: 40px auto 0;
+}
+.description button {
+  position: relative;
+  top: -44px;
+  float: right;
+}
+.wrapper-closed {
+  display: none;
+}
+.player-wrapper {
+  width: 50%;
+  margin-right: auto;
+  margin-left: auto;
+}
+#webserver-warning {
+  margin: 50px;
+  padding: 20px;
+  background-color: rgba(255, 0, 0, 0.5);
+  display: none;
+}
+#backend-calls {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+table {
+  color: #333;
+  border-collapse: collapse;
+  width: 100%;
+  border-spacing: 0;
+}
+td, th {
+  border: 1px solid transparent;
+  height: 30px;
+  transition: all 0.3s;
+}
+th {
+  background: #DFDFDF;
+  font-weight: bold;
+}
+td {
+  background: #FAFAFA;
+  text-align: center;
+}
+tr:nth-child(even) td { background: #F1F1F1; }
+tr:nth-child(odd) td { background: #FEFEFE; }
+tr:hover td { background: #dcdcdc; }
+
+#chart {
+  width: 80%;
+  margin: 20px auto;
+}
+
+#apiKey {
+  padding: 10px;
+  width: 250px;
+  text-align: center;
+}
+#load {
+  margin-top: 20px;
+}
