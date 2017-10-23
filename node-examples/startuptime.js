@@ -1,58 +1,50 @@
+const readline = require('readline');
 const moment = require('moment');
+const babar = require('babar');
 const Bitmovin = require('bitmovin-javascript').default;
-const bitmovin = new Bitmovin({ 'apiKey': '<YOUR API KEY>' });
 
-// Query the Median Startuptime of the Player
-// Note: STARTUPTIME = PLAYER_STARTUPTIME + VIDEO_STARTUPTIME
-
-
-const query = bitmovin.analytics.queries.builder.median('STARTUPTIME')
-  .between(moment().startOf('day').toDate(), moment().toDate())
-  .interval('MONTH')
-  .filter('STARTUPTIME', 'GT', 0)
-  .query() // this returns a JavaScript Promise
-
-query.then((results) => {
-  // results.rows contains the result set
-  // result.columnLabels contains a description of what the array rows represent
-  console.log("Startuptime median", results.rows.map(mapFirstRowToReadableDateTimeFormat));
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
 });
+rl.question('Please enter your Bitmovin API Key: ', (apiKey) => {
+  const bitmovin = new Bitmovin({ 'apiKey': apiKey });
 
-// Query the 90th Percentile of the Startuptime
-const queryP90 = bitmovin.analytics.queries.builder.percentile('STARTUPTIME', 90)
-  .between(moment().startOf('day').toDate(), moment().toDate())
-  .interval('MONTH')
-  .filter('STARTUPTIME', 'GT', 0)
-  .query() // this returns a JavaScript Promise
+  // Query the Median Startuptime of the Player
+  // Note: STARTUPTIME = PLAYER_STARTUPTIME + VIDEO_STARTUPTIME
+  const from = moment().add(-7, 'days').toDate();
+  const to = moment().toDate();
 
-queryP90.then((results) => {
-  console.log("Startuptime p90", results.rows.map(mapFirstRowToReadableDateTimeFormat));
+  // Query the xth Percentile of the Startuptime
+  const getPercentile = percentile => {
+    const query = bitmovin.analytics.queries.builder.percentile('STARTUPTIME', percentile)
+      .between(from, to)
+      .interval('DAY')
+      .filter('STARTUPTIME', 'GT', 0)
+       // Important - check that we are only looking at foreground loaded impressions
+      .filter('PAGE_LOAD_TYPE', 'EQ', 1)
+      .orderBy('DAY', 'DESC')
+      .query() // this returns a JavaScript Promise
+
+    return query.then((results) => {
+      return results.rows.map(mapFirstRowToReadableDateTimeFormat);
+    });
+  }
+  Promise.all([getPercentile(50), getPercentile(90), getPercentile(95)]).then(results => {
+    const p50 = results[0];
+    const p90 = results[1];
+    const p95 = results[2];
+    console.log(babar(p50, { caption: 'Median Startuptime' }));
+    console.log("Legend: x - Days since today, y - milliseconds");
+    console.log(babar(p90, { caption: 'p90 Startuptime' }));
+    console.log("Legend: x - Days since today, y - milliseconds");
+    console.log(babar(p95, { caption: 'p95 Startuptime' }));
+    console.log("Legend: x - Days since today, y - milliseconds");
+  });
+
+  const mapFirstRowToReadableDateTimeFormat = (row) => {
+    row[0] = moment(row[0]).diff(moment(), 'days');
+    return row;
+  }
+  rl.close();
 });
-
-// Query the Median Player Startup Time
-const playerStartupTime = bitmovin.analytics.queries.builder.median('PLAYER_STARTUPTIME')
-  .between(moment().startOf('day').toDate(), moment().toDate())
-  .interval('MONTH')
-  .filter('PLAYER_STARTUPTIME', 'GT', 0)
-  .query() // this returns a JavaScript Promise
-
-playerStartupTime.then((results) => {
-  console.log("Player Startuptime Median", results.rows.map(mapFirstRowToReadableDateTimeFormat));
-});
-
-// Query the Median Video Startuptime 
-// (From the time the user clicked play to when the first frame was displayed)
-const videoStartupTime = bitmovin.analytics.queries.builder.median('VIDEO_STARTUPTIME')
-  .between(moment().startOf('day').toDate(), moment().toDate())
-  .interval('MONTH')
-  .filter('VIDEO_STARTUPTIME', 'GT', 0)
-  .query() // this returns a JavaScript Promise
-
-videoStartupTime.then((results) => {
-  console.log("Video Startuptime Median", results.rows.map(mapFirstRowToReadableDateTimeFormat));
-});
-
-const mapFirstRowToReadableDateTimeFormat = (row) => {
-  row[0] = moment(row[0]).format();
-  return row;
-}
