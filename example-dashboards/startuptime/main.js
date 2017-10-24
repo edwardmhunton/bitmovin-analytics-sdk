@@ -18,10 +18,10 @@ const retrieveAnalyticsData = (apiKey, includeBackground) => {
 
   // Query the xth Percentile of the Startuptime
   const getPercentile = percentile => {
-    let queryBuilder = bitmovin.analytics.queries.builder.percentile('STARTUPTIME', percentile)
+    let queryBuilder = bitmovin.analytics.queries.builder.percentile('PLAYER_STARTUPTIME', percentile)
       .between(from, to)
       .interval('DAY')
-      .filter('STARTUPTIME', 'GT', 0)
+      .filter('PLAYER_STARTUPTIME', 'GT', 0)
       .orderBy('DAY', 'DESC')
     if (includeBackground === false) {
        // Important - check that we are only looking at foreground loaded impressions
@@ -38,7 +38,7 @@ const retrieveAnalyticsData = (apiKey, includeBackground) => {
 
 const render = (data) => {
   Highcharts.chart('chart', {
-    title: { text: "Startuptime" },
+    title: { text: "Player Startuptime" },
     yAxis: { title: { text: "Milliseconds" } },
     xAxis: {
       type: 'datetime',
