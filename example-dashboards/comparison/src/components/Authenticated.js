@@ -16,11 +16,13 @@ export default class Authenticated extends Component {
     this.signIn();
   }
 
+  apiKey = () => queryString.parse(window.location.search).apiKey;
+
   signIn = async () => {
-    const { apiKey } = queryString.parse(window.location.search);
-    const bitmovin = new Bitmovin({ apiKey });
+    const bitmovin = new Bitmovin({ apiKey: this.apiKey() });
     try {
-      const licenses = await bitmovin.analytics.licenses.list();
+      const licensesList = await bitmovin.analytics.licenses.list();
+      const licenses = licensesList.items;
       this.setState({ licenses, signedIn: true, signingIn: false });
     } catch (e) {
       this.setState({ signedIn: false, signingIn: false });
@@ -28,20 +30,26 @@ export default class Authenticated extends Component {
   }
 
   render() {
-    const { signedIn, signingIn } = this.state;
+    const { signedIn, signingIn, licenses } = this.state;
 
     if (signedIn) {
-      return this.props.children;
+      return React.Children.map(this.props.children, (child) =>
+        React.cloneElement(child, { licenses, apiKey: this.apiKey() })
+      );
     }
 
-    if (true) {
-      return <div style={{ margin: '2rem auto', textAlign: 'center' }}><CircularProgress /></div>;
+    if (signingIn) {
+      return (
+        <div style={{ margin: '5rem auto', textAlign: 'center' }}>
+          <CircularProgress color="white" />
+        </div>
+      );
     }
 
     // remaining case: login error
     return (
-      <Paper zDepth={1} style={{ margin: '2rem auto', padding: '1rem', maxWidth: '20rem', textAlign: 'center' }}>
-        <h1>Login error</h1>
+      <Paper zDepth={1} style={{ margin: '2rem auto', padding: '1rem 3rem', maxWidth: '30rem', textAlign: 'center' }}>
+        <h1 style={{ color: '#2EABE0' }}>Login error</h1>
         <p>Unable to log in. Please check your internet connection and your API key.</p>
       </Paper>
     );
