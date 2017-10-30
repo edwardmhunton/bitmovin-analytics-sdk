@@ -98,11 +98,11 @@ const videoStartupTime = bitmovin.analytics.queries.builder.median('VIDEO_STARTU
 ```
 
 #### Note about Medians, Averages and Percentiles
-Medians and Percentiles are less outlier-prone than a simple average and thus perferable to get a good understanding of how the startuptimes are distributed.
+Medians and Percentiles are less outlier-prone than a simple average and thus preferable to get a good understanding of how the startuptimes are distributed.
 
-Simple Example: You 100 users and each took 1 millisecond to load the player.
+Simple Example: 100 users viewed your video and it took each user 1 millisecond to load the player.
 The average would be 1 millisecond.
-Now let's assume we have 99 users with 1 ms startup and one that took 100ms to start up. Doing the average results in `((99+100)/100 = 1,99`. So although 99% of all our users saw a 1ms startup time - the average will mislead us and we'd think the performance was 100% worse than it actually was.
+Now let's assume we have 99 users with 1 ms startup and one that took 100ms to start up. Doing the average results in `(99 + 100) / 100 = 1.99`. So although 99% of all our users saw a 1ms startup time - the average will mislead us and we'd think the performance was 100% worse than it actually was.
 
 Percentiles and medians work by simply ordering all the values in ascending order and picking the value where exactly 50% (for the 50% percentile) are below this number. Example: 
 
@@ -113,4 +113,4 @@ Data: [.3, .8, 1.2, 2.8, 2.9, 3.4, 11, 23, 190]
 90% Percentile: 23
 ```
 
-As you can see looking at the median, the 90th, 95th and maybe 99th percentile gives us a much better overview what is actually happening. If we take the average of the above data we get 27! That's 10x worse than what 50% of your users where seeing seriously misrepresents the actual distribution of data.
+As you can see looking at the median, the 90th, 95th and maybe 99th percentile give us a much better overview of what is actually happening. If we take the average of the above data, we get 27! That's 10x worse than what 50% of your users were seeing and seriously misrepresents the actual distribution of data.
