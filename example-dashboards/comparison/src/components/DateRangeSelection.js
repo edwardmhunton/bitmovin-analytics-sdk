@@ -57,7 +57,7 @@ export default class DateRangeSelection extends Component {
     const { label } = this.state;
 
     const dateRangePopover = (
-      <Popover>
+      <Popover id="dateRangePopover">
         <div style={{ padding: '0.5rem 1rem' }}>
           <div style={{
             display: 'flex',

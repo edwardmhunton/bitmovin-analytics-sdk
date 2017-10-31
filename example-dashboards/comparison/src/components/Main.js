@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DropdownButton, Panel, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Panel, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import DateRangeSelection, { initialDateRange } from './DateRangeSelection.js';
 
 export default class Main extends Component {
