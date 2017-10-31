@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import Paper from 'material-ui/Paper';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import { DropdownButton, Panel, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import DateRangeSelection, { initialDateRange } from './DateRangeSelection.js';
 
 export default class Main extends Component {
@@ -18,26 +16,29 @@ export default class Main extends Component {
 
   render() {
     const { licenses } = this.props;
-    const { fromDate, toDate } = this.state;
+    const { fromDate, toDate, currentLicenseId } = this.state;
     return (
-      <Paper zDepth={1} style={{
+      <Panel style={{
         margin: '2rem auto',
         padding: '1rem 3rem',
         maxWidth: '50rem',
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <h1 style={{ fontWeight: 500, fontSize: '2rem', color: '#666' }}>Compare</h1>
-          <SelectField
-            floatingLabelText="License"
-            value={this.state.currentLicenseId}
-            onChange={this.handleLicenseChange}
-          >
-            {licenses.map(({ id, name, licenseKey }) =>
-              <MenuItem value={id} key={id} primaryText={name || licenseKey} />)}
-          </SelectField>
-        </div>
-        <DateRangeSelection fromDate={fromDate} toDate={toDate} onChange={this.handleDateRangeChange}/>
-      </Paper>
+        <form>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <h1 style={{ fontWeight: 500, fontSize: '2rem', color: '#666' }}>Compare</h1>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>License</ControlLabel>
+              <FormControl componentClass="select" placeholder="select" value={currentLicenseId} onChange={this.handleLicenseChange}>
+                {licenses.map(({ id, name, licenseKey }) =>
+                  <option value={id} key={id}>
+                    {name || licenseKey}
+                  </option>)}
+              </FormControl>
+            </FormGroup>
+          </div>
+          <DateRangeSelection fromDate={fromDate} toDate={toDate} onChange={this.handleDateRangeChange}/>
+        </form>
+      </Panel>
     );
   }
 }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import Bitmovin from 'bitmovin-javascript';
-import CircularProgress from 'material-ui/CircularProgress';
-import Paper from 'material-ui/Paper';
+import { Panel } from 'react-bootstrap';
 
 export default class Authenticated extends Component {
   state = {
@@ -41,17 +40,16 @@ export default class Authenticated extends Component {
     if (signingIn) {
       return (
         <div style={{ margin: '5rem auto', textAlign: 'center' }}>
-          <CircularProgress color="white" />
+          Loading …
         </div>
       );
     }
 
     // remaining case: login error
     return (
-      <Paper zDepth={1} style={{ margin: '2rem auto', padding: '1rem 3rem', maxWidth: '30rem', textAlign: 'center' }}>
-        <h1 style={{ color: '#2EABE0' }}>Login error</h1>
+      <Panel header="Login error" style={{ margin: '2rem auto', maxWidth: '30rem', textAlign: 'center' }}>
         <p>Unable to log in. Please check your internet connection and your API key.</p>
-      </Paper>
+      </Panel>
     );
   }
 }
