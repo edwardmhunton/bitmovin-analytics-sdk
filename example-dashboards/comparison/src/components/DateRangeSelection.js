@@ -7,28 +7,28 @@ import 'react-datepicker/dist/react-datepicker.css';
 const dateRanges = Object.freeze([
   Object.freeze({
     label: 'Last 24 hours',
-    fromDate: () => new Date(),
-    toDate: () => new Date(),
+    fromDate: () => moment().startOf('day').toDate(),
+    toDate: () => moment().endOf('day').toDate(),
   }),
   Object.freeze({
     label: 'Last 3 days',
-    fromDate: () => moment().subtract(3, 'days').toDate(),
-    toDate: () => new Date(),
+    fromDate: () => moment().startOf('day').subtract(3, 'days').toDate(),
+    toDate: () => moment().endOf('day').toDate(),
   }),
   Object.freeze({
     label: 'Last 7 days',
-    fromDate: () => moment().subtract(7, 'days').toDate(),
-    toDate: () => new Date(),
+    fromDate: () => moment().startOf('day').subtract(7, 'days').toDate(),
+    toDate: () => moment().endOf('day').toDate(),
   }),
   Object.freeze({
     label: 'Last 14 days',
-    fromDate: () => moment().subtract(14, 'days').toDate(),
-    toDate: () => new Date(),
+    fromDate: () => moment().startOf('day').subtract(14, 'days').toDate(),
+    toDate: () => moment().endOf('day').toDate(),
   }),
   Object.freeze({
     label: 'Last 30 days',
-    fromDate: () => moment().subtract(30, 'days').toDate(),
-    toDate: () => new Date(),
+    fromDate: () => moment().startOf('day').subtract(30, 'days').toDate(),
+    toDate: () => moment().endOf('day').toDate(),
   }),
 ]);
 
