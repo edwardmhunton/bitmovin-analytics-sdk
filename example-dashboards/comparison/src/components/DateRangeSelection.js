@@ -6,23 +6,33 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const dateRanges = Object.freeze([
   Object.freeze({
+    label: 'Last 24 hours',
+    fromDate: () => new Date(),
+    toDate: () => new Date(),
+  }),
+  Object.freeze({
+    label: 'Last 3 days',
+    fromDate: () => moment().subtract(3, 'days').toDate(),
+    toDate: () => new Date(),
+  }),
+  Object.freeze({
     label: 'Last 7 days',
     fromDate: () => moment().subtract(7, 'days').toDate(),
     toDate: () => new Date(),
   }),
   Object.freeze({
-    label: 'This month',
-    fromDate: () => moment().startOf('month').toDate(),
-    toDate: () => moment().endOf('month').toDate(),
+    label: 'Last 14 days',
+    fromDate: () => moment().subtract(14, 'days').toDate(),
+    toDate: () => new Date(),
   }),
   Object.freeze({
-    label: 'This year',
-    fromDate: () => moment().startOf('year').toDate(),
-    toDate: () => moment().endOf('year').toDate(),
+    label: 'Last 30 days',
+    fromDate: () => moment().subtract(30, 'days').toDate(),
+    toDate: () => new Date(),
   }),
 ]);
 
-export const initialDateRange = dateRanges[0];
+export const initialDateRange = dateRanges[2];
 
 export default class DateRangeSelection extends Component {
   state = {
