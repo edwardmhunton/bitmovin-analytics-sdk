@@ -1,7 +1,7 @@
 .Main-container {
   margin: 2rem auto;
   padding: 1rem 3rem;
-  max-width: 50rem;
+  max-width: 80rem;
 }
 
 .Main-titleRow {
@@ -10,7 +10,7 @@
 }
 
 .Main-titleRow h1 {
-  font-weight: 500;
-  font-size: 2rem;
+  font-weight: 300;
+  font-size: 3.6rem;
   color: #666;
 }

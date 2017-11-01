@@ -31,7 +31,7 @@ export default class Main extends Component {
         <form>
           <div className="Main-titleRow">
             <h1>Compare</h1>
-            <FormGroup controlId="formControlsSelect">
+            <FormGroup controlId="formControlsSelect" bsSize="small">
               <ControlLabel>License</ControlLabel>
               <FormControl componentClass="select" placeholder="select" value={currentLicenseId} onChange={this.handleLicenseChange}>
                 {licenses.map(({ id, name, licenseKey }) =>
