@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import queryString from 'query-string';
 import Bitmovin from 'bitmovin-javascript';
 import { Panel } from 'react-bootstrap';
+import './Authenticated.css';
 
 export default class Authenticated extends Component {
   state = {
@@ -39,7 +40,7 @@ export default class Authenticated extends Component {
 
     if (signingIn) {
       return (
-        <div style={{ margin: '5rem auto', textAlign: 'center' }}>
+        <div className="Authenticated-loading">
           Loading …
         </div>
       );
@@ -47,7 +48,7 @@ export default class Authenticated extends Component {
 
     // remaining case: login error
     return (
-      <Panel header="Login error" style={{ margin: '2rem auto', maxWidth: '30rem', textAlign: 'center' }}>
+      <Panel header="Login error" className="Authenticated-loginError">
         <p>Unable to log in. Please check your internet connection and your API key.</p>
       </Panel>
     );

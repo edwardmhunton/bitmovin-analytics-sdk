@@ -1,0 +1,10 @@
+.Authenticated-loading {
+  margin: 5rem auto;
+  text-align: center;
+}
+
+.Authenticated-loginError {
+  margin: 2rem auto;
+  max-width: 30rem;
+  text-align: center;
+}

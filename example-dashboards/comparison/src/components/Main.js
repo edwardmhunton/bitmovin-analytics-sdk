@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Panel, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import DateRangeSelection, { initialDateRange } from './DateRangeSelection.js';
 import ComparisonTable from './ComparisonTable.js';
+import './Main.css';
 
 export default class Main extends Component {
   state = {
@@ -26,14 +27,10 @@ export default class Main extends Component {
     const { licenseKey } = licenses.find(l => l.id === currentLicenseId);
 
     return (
-      <Panel style={{
-        margin: '2rem auto',
-        padding: '1rem 3rem',
-        maxWidth: '50rem',
-      }}>
+      <Panel className="Main-container">
         <form>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <h1 style={{ fontWeight: 500, fontSize: '2rem', color: '#666' }}>Compare</h1>
+          <div className="Main-titleRow">
+            <h1>Compare</h1>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>License</ControlLabel>
               <FormControl componentClass="select" placeholder="select" value={currentLicenseId} onChange={this.handleLicenseChange}>

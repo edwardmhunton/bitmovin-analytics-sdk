@@ -1,0 +1,9 @@
+#DateRangeSelection-popover {
+  padding: 0.5rem 1rem;
+}
+
+.DateRangeSelection-dateSelection {
+  display: flex;
+  flexWrap: nowrap;
+  justifyContent: space-between;
+}

@@ -1,0 +1,16 @@
+.Main-container {
+  margin: 2rem auto;
+  padding: 1rem 3rem;
+  max-width: 50rem;
+}
+
+.Main-titleRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Main-titleRow h1 {
+  font-weight: 500;
+  font-size: 2rem;
+  color: #666;
+}

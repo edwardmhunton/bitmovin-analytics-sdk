@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import { Button, OverlayTrigger, Popover, FormGroup, ControlLabel } from 'react-bootstrap';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
+import './DateRangeSelection.css';
 
 const dateRanges = Object.freeze([
   Object.freeze({
@@ -57,32 +58,26 @@ export default class DateRangeSelection extends Component {
     const { label } = this.state;
 
     const dateRangePopover = (
-      <Popover id="dateRangePopover">
-        <div style={{ padding: '0.5rem 1rem' }}>
-          <div style={{
-            display: 'flex',
-            flexWrap: 'nowrap',
-            justifyContent: 'space-between',
-          }}>
-            <FormGroup controlId="fromDate">
-              <ControlLabel>From</ControlLabel>
-              <DatePicker
-                selected={moment(fromDate)}
-                onChange={this.handleDateChange('fromDate')}
-              />
-            </FormGroup>
-            <FormGroup controlId="toDate">
-              <ControlLabel>To</ControlLabel>
-              <DatePicker
-                selected={moment(toDate)}
-                onChange={this.handleDateChange('toDate')}
-              />
-            </FormGroup>
-          </div>
-          <div>
-            {dateRanges.map(({ label }) =>
-              <Button key={label} onClick={this.selectRange(label)}>{label}</Button>)}
-          </div>
+      <Popover id="DateRangeSelection-popover">
+        <div className="DateRangeSelection-dateSelection">
+          <FormGroup controlId="fromDate">
+            <ControlLabel>From</ControlLabel>
+            <DatePicker
+              selected={moment(fromDate)}
+              onChange={this.handleDateChange('fromDate')}
+            />
+          </FormGroup>
+          <FormGroup controlId="toDate">
+            <ControlLabel>To</ControlLabel>
+            <DatePicker
+              selected={moment(toDate)}
+              onChange={this.handleDateChange('toDate')}
+            />
+          </FormGroup>
+        </div>
+        <div>
+          {dateRanges.map(({ label }) =>
+            <Button key={label} onClick={this.selectRange(label)}>{label}</Button>)}
         </div>
       </Popover>
     );
