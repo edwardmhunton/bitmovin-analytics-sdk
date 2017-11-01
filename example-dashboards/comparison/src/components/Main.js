@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Panel, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import DateRangeSelection, { initialDateRange } from './DateRangeSelection.js';
+import ComparisonTable from './ComparisonTable.js';
 
 export default class Main extends Component {
   state = {
@@ -9,14 +10,21 @@ export default class Main extends Component {
     toDate: initialDateRange.toDate(),
   };
 
-  handleLicenseChange = (event, index, id) => this.setState({ currentLicenseId: id });
+  handleLicenseChange = (event) => {
+    const currentLicenseId = event.currentTarget.value;
+    this.setState({ currentLicenseId });
+  }
 
   handleDateRangeChange = ({ fromDate, toDate }) =>
     this.setState({ fromDate, toDate });
 
   render() {
-    const { licenses } = this.props;
+    const { licenses, apiKey } = this.props;
+    console.log(licenses);
     const { fromDate, toDate, currentLicenseId } = this.state;
+    console.log(currentLicenseId);
+    const { licenseKey } = licenses.find(l => l.id === currentLicenseId);
+
     return (
       <Panel style={{
         margin: '2rem auto',
@@ -37,6 +45,7 @@ export default class Main extends Component {
             </FormGroup>
           </div>
           <DateRangeSelection fromDate={fromDate} toDate={toDate} onChange={this.handleDateRangeChange}/>
+          <ComparisonTable fromDate={fromDate} toDate={toDate} apiKey={apiKey} licenseKey={licenseKey} />
         </form>
       </Panel>
     );
