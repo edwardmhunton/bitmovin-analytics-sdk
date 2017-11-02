@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bitmovin-javascript": "^1.2.2",
+    "country-list": "^1.1.0",
     "moment": "^2.19.1",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.5",

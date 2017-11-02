@@ -1028,7 +1028,7 @@ binary-extensions@^1.0.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-1.10.0.tgz#9aeb9a6c5e88638aad171e167f5900abe24835d0"
 
-bitmovin-javascript@^1.2.2:
+bitmovin-javascript@^1.2.0:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/bitmovin-javascript/-/bitmovin-javascript-1.2.2.tgz#3420aadc47a1e2267ff77139390607da9840175f"
 
@@ -1594,6 +1594,10 @@ cosmiconfig@^2.1.0, cosmiconfig@^2.1.1:
     os-homedir "^1.0.1"
     parse-json "^2.2.0"
     require-from-string "^1.1.0"
+
+country-list@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/country-list/-/country-list-1.1.0.tgz#3ea3608857e17458657d129e1d737e4c2f79775b"
 
 create-ecdh@^4.0.0:
   version "4.0.0"

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
+import { FormGroup, FormControl, Table } from 'react-bootstrap';
+import countryList from 'country-list';
 import Bitmovin from 'bitmovin-javascript';
+import CountryCell from './CountryCell.js';
+
+const countries = countryList();
 
 export default class ComparisonTable extends Component {
   constructor({ apiKey, licenseKey, fromDate, toDate }) {
@@ -9,38 +13,14 @@ export default class ComparisonTable extends Component {
     const bitmovin = new Bitmovin({ apiKey });
     this.state = {
       queryBuilder: bitmovin.analytics.queries.builder,
-      countries: ['US'],
-      countryStats: {},
+      selectedCountries: ['US', 'AT', 'DE'],
     };
-    this.fetchAnalytics({ fromDate, toDate, licenseKey });
   }
 
-  fetchAnalytics = async ({ fromDate, toDate, licenseKey }) => {
-    const { countries, queryBuilder } = this.state;
-    const countryStats = {};
-
-    countries.forEach(async (country) => {
-      countryStats[country] = {};
-
-      const { rows } = await queryBuilder
-        .median('STARTUPTIME')
-        .licenseKey(licenseKey)
-        .between(fromDate, toDate)
-        .filter('COUNTRY', 'EQ', country)
-        .filter('STARTUPTIME', 'GT', 0)
-        .query();
-
-      const startupTime = rows[0] ? rows[0][0] : null;
-      if (startupTime) {
-        const startupTimeFormatted = `${(startupTime / 1000).toFixed(2)}s`;
-        countryStats[country] = {
-          ...countryStats[country],
-          startupTimeMedian: startupTimeFormatted,
-        };
-      }
-
-      this.setState({ countryStats });
-    });
+  changeCountryCode = (index) => (event) => {
+    const selectedCountries = [...this.state.selectedCountries];
+    selectedCountries[index] = event.currentTarget.value;
+    this.setState({ selectedCountries });
   }
 
   componentWillReceiveProps({ fromDate, toDate, licenseKey }) {
@@ -48,24 +28,47 @@ export default class ComparisonTable extends Component {
   }
 
   render() {
-    const { countries, countryStats } = this.state;
+    const { fromDate, toDate, licenseKey } = this.props;
+    const { selectedCountries, queryBuilder } = this.state;
 
     return (
       <Table>
         <thead>
           <tr>
             <th></th>
-            <th>USA</th>
+            {selectedCountries.map((countryCode, index) =>
+              <th key={`header-${countryCode}`}>
+                <FormGroup controlId={`countrySelect${index}`}>
+                  <FormControl
+                    componentClass="select"
+                    placeholder="country"
+                    value={countryCode}
+                    onChange={this.changeCountryCode(index)}
+                  >
+                    {countries.getData().map(({ code, name }) =>
+                      <option value={code} key={code}>{name}</option>
+                    )}
+                  </FormControl>
+                </FormGroup>
+              </th>
+            )}
             <th>+</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Total Startup Time (median)</td>
-            {countries.map(country =>
-              <td key={`${country}-startupTime-median`}>
-                {(countryStats[country] && countryStats[country].startupTimeMedian) || 'N/A'}
-              </td>
+            {selectedCountries.map(country =>
+              <CountryCell
+                key={`${country}-STARTUPTIME-median`}
+                country={country}
+                fromDate={fromDate}
+                toDate={toDate}
+                licenseKey={licenseKey}
+                aggregation="median"
+                dimension="STARTUPTIME"
+                queryBuilder={queryBuilder}
+              />
             )}
           </tr>
         </tbody>
