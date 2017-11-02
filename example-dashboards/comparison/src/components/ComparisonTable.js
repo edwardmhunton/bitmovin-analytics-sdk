@@ -23,10 +23,6 @@ export default class ComparisonTable extends Component {
     this.setState({ selectedCountries });
   }
 
-  componentWillReceiveProps({ fromDate, toDate, licenseKey }) {
-    this.fetchAnalytics({ fromDate, toDate, licenseKey });
-  }
-
   render() {
     const { fromDate, toDate, licenseKey } = this.props;
     const { selectedCountries, queryBuilder } = this.state;
