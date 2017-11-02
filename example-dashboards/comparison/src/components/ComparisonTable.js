@@ -6,21 +6,41 @@ export default class ComparisonTable extends Component {
   constructor({ apiKey, licenseKey, fromDate, toDate }) {
     super();
     console.log(apiKey);
-    const bitmovin = new Bitmovin({ apiKey, debug: true });
+    const bitmovin = new Bitmovin({ apiKey });
     this.state = {
       queryBuilder: bitmovin.analytics.queries.builder,
+      countries: ['US'],
+      countryStats: {},
     };
     this.fetchAnalytics({ fromDate, toDate, licenseKey });
   }
 
   fetchAnalytics = async ({ fromDate, toDate, licenseKey }) => {
-    console.log(fromDate, toDate);
-    const startupTime = await this.state.queryBuilder
-      .avg('STARTUPTIME')
-      //.between(fromDate, toDate)
-      //.filter('LICENSE_KEY', 'EQ', licenseKey)
-      .query();
-    console.log(startupTime);
+    const { countries, queryBuilder } = this.state;
+    const countryStats = {};
+
+    countries.forEach(async (country) => {
+      countryStats[country] = {};
+
+      const { rows } = await queryBuilder
+        .median('STARTUPTIME')
+        .licenseKey(licenseKey)
+        .between(fromDate, toDate)
+        .filter('COUNTRY', 'EQ', country)
+        .filter('STARTUPTIME', 'GT', 0)
+        .query();
+
+      const startupTime = rows[0] ? rows[0][0] : null;
+      if (startupTime) {
+        const startupTimeFormatted = `${(startupTime / 1000).toFixed(2)}s`;
+        countryStats[country] = {
+          ...countryStats[country],
+          startupTimeMedian: startupTimeFormatted,
+        };
+      }
+
+      this.setState({ countryStats });
+    });
   }
 
   componentWillReceiveProps({ fromDate, toDate, licenseKey }) {
@@ -28,6 +48,8 @@ export default class ComparisonTable extends Component {
   }
 
   render() {
+    const { countries, countryStats } = this.state;
+
     return (
       <Table>
         <thead>
@@ -39,7 +61,12 @@ export default class ComparisonTable extends Component {
         </thead>
         <tbody>
           <tr>
-            <td>Video Startup Time (median)</td>
+            <td>Total Startup Time (median)</td>
+            {countries.map(country =>
+              <td key={`${country}-startupTime-median`}>
+                {countryStats[country] && countryStats[country].startupTimeMedian || 'N/A'}
+              </td>
+            )}
           </tr>
         </tbody>
       </Table>
