@@ -64,7 +64,7 @@ export default class ComparisonTable extends Component {
             <td>Total Startup Time (median)</td>
             {countries.map(country =>
               <td key={`${country}-startupTime-median`}>
-                {countryStats[country] && countryStats[country].startupTimeMedian || 'N/A'}
+                {(countryStats[country] && countryStats[country].startupTimeMedian) || 'N/A'}
               </td>
             )}
           </tr>
