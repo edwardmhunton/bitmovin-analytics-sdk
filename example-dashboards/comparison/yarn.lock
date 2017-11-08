@@ -1028,7 +1028,7 @@ binary-extensions@^1.0.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-1.10.0.tgz#9aeb9a6c5e88638aad171e167f5900abe24835d0"
 
-bitmovin-javascript@^1.2.0:
+bitmovin-javascript@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/bitmovin-javascript/-/bitmovin-javascript-1.2.2.tgz#3420aadc47a1e2267ff77139390607da9840175f"
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Panel, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import DateRangeSelection, { initialDateRange } from './DateRangeSelection.js';
 import ComparisonTable from './ComparisonTable.js';
+import LicenseKeySelect from './LicenseKeySelect.js';
 import './Main.css';
 
 export default class Main extends Component {
@@ -30,20 +31,11 @@ export default class Main extends Component {
         <form>
           <div className="Main-titleRow">
             <h1>Compare</h1>
-            <FormGroup controlId="formControlsSelect" bsSize="small">
-              <ControlLabel>License</ControlLabel>
-              <FormControl
-                componentClass="select"
-                placeholder="select"
-                value={currentLicenseKey}
-                onChange={this.handleLicenseChange}
-              >
-                {licenses.map(({ name, licenseKey }) =>
-                  <option value={licenseKey} key={licenseKey}>
-                    {name || licenseKey}
-                  </option>)}
-              </FormControl>
-            </FormGroup>
+            {licenses.length > 1 && <LicenseKeySelect
+              currentLicenseKey={currentLicenseKey}
+              handleLicenseChange={this.handleLicenseChange}
+              licenses={licenses}
+            />}
           </div>
           <DateRangeSelection fromDate={fromDate} toDate={toDate} onChange={this.handleDateRangeChange}/>
           <ComparisonTable fromDate={fromDate} toDate={toDate} apiKey={apiKey} licenseKey={currentLicenseKey} />
