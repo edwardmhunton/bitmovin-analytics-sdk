@@ -8,3 +8,7 @@
   flex-wrap: nowrap;
   justify-content: space-between;
 }
+
+.DateRangeSelection-dateSelection .react-datepicker-popper {
+  z-index: 3;
+}
