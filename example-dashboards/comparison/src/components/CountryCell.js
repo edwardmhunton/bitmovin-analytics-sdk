@@ -14,17 +14,18 @@ export default class CountryCell extends Component {
     this.fetchAnalytics(newProps);
   }
 
-  fetchAnalytics = async ({ fromDate, toDate, licenseKey, country, queryBuilder, aggregation, dimension }) => {
-    const { rows } = await queryBuilder[aggregation](dimension)
-      .licenseKey(licenseKey)
-      .between(fromDate, toDate)
-      .filter('COUNTRY', 'EQ', country)
-      .filter('STARTUPTIME', 'GT', 0)
-      .query();
+  fetchAnalytics = async ({ fromDate, toDate, licenseKey, country, queryBuilder, aggregation,
+    dimension, aggregationParam }) => {
+      const { rows } = await queryBuilder[aggregation](dimension, aggregationParam)
+        .licenseKey(licenseKey)
+        .between(fromDate, toDate)
+        .filter('COUNTRY', 'EQ', country)
+        .filter(dimension, 'GT', 0)
+        .query();
 
-    const value = rows[0] ? rows[0][0] : null;
-    this.setState({ value });
-  }
+      const value = rows[0] ? rows[0][0] : null;
+      this.setState({ value });
+    }
 
   render() {
     const { value } = this.state;

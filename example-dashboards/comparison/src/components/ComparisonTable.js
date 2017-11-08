@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Table, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import countryList from 'country-list';
 import Bitmovin from 'bitmovin-javascript';
-import CountryCell from './CountryCell.js';
 import AddCountryModal from './AddCountryModal.js';
+import ComparisonTableBody from './ComparisonTableBody.js';
 import './ComparisonTable.css';
 
 const countries = countryList();
@@ -11,7 +11,6 @@ const countries = countryList();
 export default class ComparisonTable extends Component {
   constructor({ apiKey, licenseKey, fromDate, toDate }) {
     super();
-    console.log(apiKey);
     const bitmovin = new Bitmovin({ apiKey });
     this.state = {
       queryBuilder: bitmovin.analytics.queries.builder,
@@ -78,23 +77,13 @@ export default class ComparisonTable extends Component {
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Total Startup Time (median)</td>
-              {selectedCountries.map(country =>
-                <CountryCell
-                  key={`${country}-STARTUPTIME-median`}
-                  country={country}
-                  fromDate={fromDate}
-                  toDate={toDate}
-                  licenseKey={licenseKey}
-                  aggregation="median"
-                  dimension="STARTUPTIME"
-                  queryBuilder={queryBuilder}
-                />
-              )}
-            </tr>
-          </tbody>
+          <ComparisonTableBody
+            selectedCountries={selectedCountries}
+            fromDate={fromDate}
+            toDate={toDate}
+            licenseKey={licenseKey}
+            queryBuilder={queryBuilder}
+          />
         </Table>
         <AddCountryModal
           onAdd={this.addCountryCode}
