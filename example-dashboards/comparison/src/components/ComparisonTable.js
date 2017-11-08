@@ -47,6 +47,7 @@ export default class ComparisonTable extends Component {
   render() {
     const { fromDate, toDate, licenseKey } = this.props;
     const { selectedCountries, queryBuilder } = this.state;
+    const availableCountries = countries.getData().filter(c => !selectedCountries.includes(c.code));
 
     const removeTooltip = (
       <Tooltip id="tooltip">Remove this country.</Tooltip>
@@ -99,7 +100,7 @@ export default class ComparisonTable extends Component {
           onAdd={this.addCountryCode}
           show={this.state.showAddCountryModal}
           onHide={this.hideAddCountryModal}
-          countries={countries}
+          countries={availableCountries}
         />
       </div>
     );

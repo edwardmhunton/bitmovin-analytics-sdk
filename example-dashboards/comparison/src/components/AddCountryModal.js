@@ -13,11 +13,14 @@ export default class AddCountryModal extends Component {
   handleSubmit = () => {
     this.props.onAdd(this.state.countryCode);
     this.props.onHide();
+    this.setState({ countryCode: '' });
   }
 
   render() {
+    const { show, onHide, countries } = this.props;
+
     return (
-      <Modal show={this.props.show} onHide={this.props.onHide}>
+      <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
           <Modal.Title>Add a country</Modal.Title>
         </Modal.Header>
@@ -29,7 +32,7 @@ export default class AddCountryModal extends Component {
               value={this.state.countryCode}
               onChange={this.onChange}
             >
-              {this.props.countries.getData().map(({ code, name }) =>
+              {countries.map(({ code, name }) =>
                 <option value={code} key={code}>{name}</option>
               )}
             </FormControl>
