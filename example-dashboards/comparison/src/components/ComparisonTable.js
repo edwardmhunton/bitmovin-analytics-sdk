@@ -64,10 +64,10 @@ export default class ComparisonTable extends Component {
               <th></th>
               {selectedCountries.map((countryCode, index) =>
                 <th key={`header-${countryCode}`}>
-                  {countries.getName(countryCode)}
                   <OverlayTrigger placement="top" overlay={removeTooltip}>
                     <Button bsSize="xsmall" className="remove" onClick={this.removeCountry(countryCode)}>–</Button>
                   </OverlayTrigger>
+                  {countries.getName(countryCode)}
                 </th>
               )}
               <th>

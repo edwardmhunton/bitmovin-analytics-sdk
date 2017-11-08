@@ -1,5 +1,6 @@
 import React from 'react';
 import CountryCell from './CountryCell.js';
+import './ComparisonTableBody.css';
 
 const dimensions = ['STARTUPTIME', 'PLAYER_STARTUPTIME', 'VIDEO_STARTUPTIME'];
 const aggregations = [{ name: 'median' }, { name: 'percentile', param: 95 }]
@@ -32,7 +33,7 @@ export default function ComparisonTableBody(props) {
   const { selectedCountries, fromDate, toDate, licenseKey, queryBuilder } = props;
 
   return (
-    <tbody>
+    <tbody className="ComparisonTableBody">
       {queries.map(q =>
         <tr key={`${q.country}-${q.dimension}-${q.aggregation}-${q.aggregationParam}`}>
           <td>{nameForQuery(q)}</td>

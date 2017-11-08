@@ -1,5 +1,6 @@
 .ComparisonTable th {
   line-height: 2rem;
+  text-align: right;
 }
 
 .ComparisonTable button {
@@ -11,6 +12,6 @@
 }
 
 .ComparisonTable button.remove {
-  margin-left: 1rem;
+  margin-right: 1rem;
   border: 1px solid #EEE;
 }
