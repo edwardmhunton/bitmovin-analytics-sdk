@@ -1,0 +1,7 @@
+div.ComparableSelect {
+  margin: 0;
+}
+
+.ComparableSelect select {
+  width: auto;
+}

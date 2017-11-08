@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import countryList from 'country-list';
 import Bitmovin from 'bitmovin-javascript';
+import ComparableSelect, { initialComparableKey } from './ComparableSelect.js';
 import AddCountryModal from './AddCountryModal.js';
 import ComparisonTableBody from './ComparisonTableBody.js';
 import './ComparisonTable.css';
@@ -16,6 +17,7 @@ export default class ComparisonTable extends Component {
       queryBuilder: bitmovin.analytics.queries.builder,
       selectedCountries: ['US', 'AT', 'DE'],
       showAddCountryModal: false,
+      currentComparableKey: initialComparableKey,
     };
   }
 
@@ -32,6 +34,10 @@ export default class ComparisonTable extends Component {
 
   handleAddButtonClick = () => {
     this.setState({ showAddCountryModal: true });
+  }
+
+  handleComparableKeyChange = (currentComparableKey) => {
+    this.setState({ currentComparableKey });
   }
 
   hideAddCountryModal = () => {
@@ -61,7 +67,12 @@ export default class ComparisonTable extends Component {
         <Table>
           <thead>
             <tr>
-              <th></th>
+              <th>
+                <ComparableSelect
+                  comparableKey={this.state.currentComparableKey}
+                  onChange={this.handleComparableKeyChange}
+                />
+              </th>
               {selectedCountries.map((countryCode, index) =>
                 <th key={`header-${countryCode}`}>
                   <OverlayTrigger placement="top" overlay={removeTooltip}>
