@@ -4,6 +4,7 @@ import countryList from 'country-list';
 import Bitmovin from 'bitmovin-javascript';
 import ComparableSelect, { initialComparableKey, getSingleName } from './ComparableSelect.js';
 import AddColumnModal from './AddColumnModal.js';
+import AddColumnButton from './AddColumnButton.js';
 import ComparisonTableBody from './ComparisonTableBody.js';
 import './ComparisonTable.css';
 
@@ -109,10 +110,6 @@ export default class ComparisonTable extends Component {
       <Tooltip id="tooltip">Remove this {comparableName}.</Tooltip>
     );
 
-    const addTooltip = (
-      <Tooltip id="tooltip">Add another {comparableName}.</Tooltip>
-    );
-
     return (
       <div className="ComparisonTable">
         <Table>
@@ -133,9 +130,11 @@ export default class ComparisonTable extends Component {
                 </th>
               )}
               <th>
-                <OverlayTrigger placement="top" overlay={addTooltip}>
-                  <Button bsStyle="primary" bsSize="xsmall" onClick={this.handleAddButtonClick}>+</Button>
-                </OverlayTrigger>
+                <AddColumnButton
+                  comparableName={comparableName}
+                  onClick={this.handleAddButtonClick}
+                  optionsPromise={this.availableAddColumnOptions()}
+                />
               </th>
             </tr>
           </thead>

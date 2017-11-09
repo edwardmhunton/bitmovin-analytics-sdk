@@ -18,7 +18,8 @@ export default class AddColumnModal extends Component {
 
   awaitOptions = async (optionsPromise) => {
     const options = await optionsPromise;
-    this.setState({ options });
+    const columnKey = options.length > 0 ? options[0].key : '';
+    this.setState({ options, columnKey });
   }
 
   onChange = (event) => {
