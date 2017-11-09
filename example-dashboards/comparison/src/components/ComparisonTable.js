@@ -18,13 +18,14 @@ export default class ComparisonTable extends Component {
       selectedColumnKeys: [],
       currentComparableKey: initialComparableKey,
       players: [],
+      isLoading: true,
     };
     this.setInitialColumnKeys();
   }
 
   setInitialColumnKeys = async () => {
     const selectedColumnKeys = await this.initialColumnKeys(this.state.currentComparableKey)
-    this.setState({ selectedColumnKeys });
+    this.setState({ selectedColumnKeys, isLoading: false });
   }
 
   fetchPlayers = async () => {
@@ -64,8 +65,9 @@ export default class ComparisonTable extends Component {
   }
 
   handleComparableKeyChange = async (currentComparableKey) => {
+    this.setState({ isLoading: true });
     const selectedColumnKeys = await this.initialColumnKeys(currentComparableKey)
-    this.setState({ currentComparableKey, selectedColumnKeys });
+    this.setState({ currentComparableKey, selectedColumnKeys, isLoading: false });
   }
 
   removeColumn = (columnKey) => () => {
@@ -93,7 +95,7 @@ export default class ComparisonTable extends Component {
 
   render() {
     const { fromDate, toDate, licenseKey } = this.props;
-    const { selectedColumnKeys, queryBuilder, currentComparableKey } = this.state;
+    const { selectedColumnKeys, queryBuilder, currentComparableKey, isLoading } = this.state;
     const comparableName = getSingleName(currentComparableKey);
 
     const removeTooltip = (
@@ -102,13 +104,14 @@ export default class ComparisonTable extends Component {
 
     return (
       <div className="ComparisonTable">
-        <Table>
+        <Table className={isLoading && 'isLoading'}>
           <thead>
             <tr>
               <th>
                 <ComparableSelect
                   comparableKey={currentComparableKey}
                   onChange={this.handleComparableKeyChange}
+                  disabled={isLoading}
                 />
               </th>
               {selectedColumnKeys.map((columnKey, index) =>

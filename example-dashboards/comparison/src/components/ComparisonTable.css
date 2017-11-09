@@ -2,6 +2,14 @@
   margin-top: 3rem;
 }
 
+.ComparisonTable .table {
+  transition: opacity 0.2s ease;
+}
+
+.ComparisonTable .table.isLoading {
+  opacity: 0.7;
+}
+
 .ComparisonTable .table > thead > tr > th {
   line-height: 3.2rem;
   padding-top: 0.6rem;

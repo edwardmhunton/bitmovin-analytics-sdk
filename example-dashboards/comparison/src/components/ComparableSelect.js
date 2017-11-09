@@ -18,7 +18,7 @@ export default class ComparableSelect extends Component {
   handleChange = event => this.props.onChange(event.currentTarget.value);
 
   render() {
-    const { comparableKey } = this.props;
+    const { comparableKey, disabled } = this.props;
 
     return (
       <FormGroup controlId="comparableSelect" className="ComparableSelect">
@@ -28,6 +28,7 @@ export default class ComparableSelect extends Component {
           placeholder="select"
           value={comparableKey}
           onChange={this.handleChange}
+          disabled={disabled}
         >
           {comparables.map(({ collectionName, key }) =>
             <option value={key} key={key}>{collectionName}</option>)}
