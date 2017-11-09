@@ -62,6 +62,7 @@ export default class TimeRow extends Component {
         {columnKeys.map((key, index) =>
           <TimeCell key={key} value={values[index]} loading={isLoading} allValues={values} />
         )}
+        <td></td>
       </tr>
     );
   }
