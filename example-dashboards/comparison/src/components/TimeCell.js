@@ -21,6 +21,7 @@ export default class TimeCell extends Component {
         .between(fromDate, toDate)
         .filter(comparableKey, 'EQ', columnKey)
         .filter(dimension, 'GT', 0)
+        .filter('PAGE_LOAD_TYPE', 'EQ', 1)
         .query();
 
       const value = rows[0] ? rows[0][0] : null;
