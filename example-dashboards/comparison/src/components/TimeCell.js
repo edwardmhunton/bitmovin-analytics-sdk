@@ -1,8 +1,8 @@
 import React from 'react';
 import './TimeCell.css';
 
-const text = (value, isLoading) => {
-  if (isLoading) {
+const text = ({ value, loading }) => {
+  if (loading) {
     return '⋯';
   }
   if (value) {
@@ -11,21 +11,28 @@ const text = (value, isLoading) => {
   return 'N/A';
 }
 
-export default function TimeCell({ value, loading, allValues }) {
+const className = ({ value, loading, allValues }) => {
+  if (loading) {
+    return '';
+  }
+
   const [lowest, ...remaining] = [...allValues].sort((a, b) => a - b);
   const [highest,] = remaining.reverse();
 
-  let className = '';
-  if (value === lowest) {
-    className = 'best';
+  switch (value) {
+    case lowest:
+      return 'best';
+    case highest:
+      return 'worst';
+    default:
+      return '';
   }
-  if (value === highest) {
-    className = 'worst';
-  }
+}
 
+export default function TimeCell(props) {
   return (
-    <td className={`TimeCell ${className}`}>
-      {text(value, loading)}
+    <td className={`TimeCell ${className(props)}`}>
+      {text(props)}
     </td>
   );
 }
