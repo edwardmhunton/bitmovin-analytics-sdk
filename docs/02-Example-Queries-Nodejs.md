@@ -22,6 +22,7 @@ Number of unique users that played video on the site.
 ```js
 const query = bitmovin.analytics.queries.builder.count('USER_ID')
   .between(moment().subtract(1, 'day').toDate(), moment().toDate())
+  .filter('VIDEO_STARTUPTIME', 'GT', 0) // makes sure we only get impressions that actually played the video
   .interval('HOUR')
   .query() // this returns a JavaScript Promise
 ```
@@ -33,6 +34,7 @@ Number of Unique Play sessions.
 ```js
 const query = bitmovin.analytics.queries.builder.count('IMPRESSION_ID')
   .between(moment().subtract(1, 'day').toDate(), moment().toDate())
+  .filter('VIDEO_STARTUPTIME', 'GT', 0) // makes sure we only get impressions that actually played the video
   .interval('HOUR')
   .query() // this returns a JavaScript Promise
 ```
