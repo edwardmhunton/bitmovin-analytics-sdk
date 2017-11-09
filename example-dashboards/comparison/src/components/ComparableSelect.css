@@ -5,4 +5,10 @@ div.ComparableSelect {
 .ComparableSelect select {
   width: auto;
   text-transform: capitalize;
+  display: inline-block;
+  margin-left: 1rem;
+}
+
+.ComparableSelect label {
+  margin: 0;
 }
