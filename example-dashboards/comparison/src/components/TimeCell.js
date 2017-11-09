@@ -12,17 +12,18 @@ const text = ({ value, loading }) => {
 }
 
 const className = ({ value, loading, allValues }) => {
-  if (loading) {
+  if (loading || !value) {
     return '';
   }
 
-  const [lowest, ...remaining] = [...allValues].sort((a, b) => a - b);
-  const [highest,] = remaining.reverse();
+  const sortedValues = allValues.filter(v => v !== null).sort((a, b) => a - b);
+  const [lowestValue, ...highestValues] = sortedValues;
+  const [highestValue,] = highestValues.reverse();
 
   switch (value) {
-    case lowest:
+    case lowestValue:
       return 'best';
-    case highest:
+    case highestValue:
       return 'worst';
     default:
       return '';
