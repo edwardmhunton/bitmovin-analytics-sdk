@@ -33,7 +33,8 @@ export default class TimeRow extends Component {
   }
 
   fetchAnalytics = async ({ query, columnKeys, queryBuilder }) => {
-      const { aggregation, dimension, aggregationParam, licenseKey, fromDate, toDate, comparableKey } = query;
+      const { aggregation, dimension, aggregationParam, licenseKey, fromDate, toDate,
+        comparableKey } = query;
       const runningQueries = columnKeys.map(columnKey => {
         return queryBuilder[aggregation](dimension, aggregationParam)
           .licenseKey(licenseKey)
@@ -59,7 +60,7 @@ export default class TimeRow extends Component {
       <tr>
         <td>{nameForQuery(query)}</td>
         {columnKeys.map((key, index) =>
-          <TimeCell key={key} value={values[index]} loading={isLoading} />
+          <TimeCell key={key} value={values[index]} loading={isLoading} allValues={values} />
         )}
       </tr>
     );
