@@ -3,7 +3,6 @@ import { Table, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import countryList from 'country-list';
 import Bitmovin from 'bitmovin-javascript';
 import ComparableSelect, { initialComparableKey, getSingleName } from './ComparableSelect.js';
-import AddColumnModal from './AddColumnModal.js';
 import AddColumnButton from './AddColumnButton.js';
 import ComparisonTableBody from './ComparisonTableBody.js';
 import './ComparisonTable.css';
@@ -17,7 +16,6 @@ export default class ComparisonTable extends Component {
     this.state = {
       queryBuilder: bitmovin.analytics.queries.builder,
       selectedColumnKeys: [],
-      showAddColumnModal: false,
       currentComparableKey: initialComparableKey,
       players: [],
     };
@@ -65,17 +63,9 @@ export default class ComparisonTable extends Component {
     this.setState({ selectedColumnKeys });
   }
 
-  handleAddButtonClick = () => {
-    this.setState({ showAddColumnModal: true });
-  }
-
   handleComparableKeyChange = async (currentComparableKey) => {
     const selectedColumnKeys = await this.initialColumnKeys(currentComparableKey)
     this.setState({ currentComparableKey, selectedColumnKeys });
-  }
-
-  hideAddColumnModal = () => {
-    this.setState({ showAddColumnModal: false });
   }
 
   removeColumn = (columnKey) => () => {
@@ -132,7 +122,7 @@ export default class ComparisonTable extends Component {
               <th>
                 <AddColumnButton
                   comparableName={comparableName}
-                  onClick={this.handleAddButtonClick}
+                  onAdd={this.addColumn}
                   optionsPromise={this.availableAddColumnOptions()}
                 />
               </th>
@@ -147,13 +137,6 @@ export default class ComparisonTable extends Component {
             queryBuilder={queryBuilder}
           />
         </Table>
-        <AddColumnModal
-          onAdd={this.addColumn}
-          show={this.state.showAddColumnModal}
-          onHide={this.hideAddColumnModal}
-          optionsPromise={this.availableAddColumnOptions()}
-          comparableName={comparableName}
-        />
       </div>
     );
   }

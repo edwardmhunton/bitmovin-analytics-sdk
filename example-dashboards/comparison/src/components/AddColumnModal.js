@@ -4,22 +4,15 @@ import { Button, FormGroup, FormControl, Modal } from 'react-bootstrap';
 export default class AddColumnModal extends Component {
   state = {
     columnKey: '',
-    options: [],
   }
 
-  constructor(props) {
-    super(props);
-    this.awaitOptions(props.optionsPromise);
+  componentWillReceiveProps(newProps) {
+    this.setDefaultColumnKey(newProps);
   }
 
-  componentWillReceiveProps(props) {
-    this.awaitOptions(props.optionsPromise);
-  }
-
-  awaitOptions = async (optionsPromise) => {
-    const options = await optionsPromise;
+  setDefaultColumnKey = ({ options }) => {
     const columnKey = options.length > 0 ? options[0].key : '';
-    this.setState({ options, columnKey });
+    this.setState({ columnKey });
   }
 
   onChange = (event) => {
@@ -29,12 +22,11 @@ export default class AddColumnModal extends Component {
   handleSubmit = () => {
     this.props.onAdd(this.state.columnKey);
     this.props.onHide();
-    this.setState({ columnKey: '' });
+    this.setDefaultColumnKey(this.props);
   }
 
   render() {
-    const { show, onHide, comparableName } = this.props;
-    const { options } = this.state;
+    const { show, onHide, comparableName, options } = this.props;
 
     return (
       <Modal show={show} onHide={onHide}>
