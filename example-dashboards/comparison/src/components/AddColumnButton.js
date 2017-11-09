@@ -13,8 +13,10 @@ export default class AddColumnButton extends Component {
     this.awaitOptions(props.optionsPromise);
   }
 
-  componentWillReceiveProps(props) {
-    this.awaitOptions(props.optionsPromise);
+  componentWillReceiveProps({ disabled, optionsPromise }) {
+    if (!disabled) {
+      this.awaitOptions(optionsPromise);
+    }
   }
 
   awaitOptions = async (optionsPromise) => {
@@ -31,7 +33,7 @@ export default class AddColumnButton extends Component {
   }
 
   render() {
-    const { comparableName, onAdd } = this.props;
+    const { comparableName, onAdd, disabled } = this.props;
     const { options, showAddColumnModal } = this.state;
     const noMoreOptions = options.length === 0;
 
@@ -45,7 +47,7 @@ export default class AddColumnButton extends Component {
           <Button
             bsStyle="primary"
             bsSize="xsmall"
-            disabled={noMoreOptions}
+            disabled={noMoreOptions || disabled}
             onClick={this.handleAddButtonClick}
           >
             +

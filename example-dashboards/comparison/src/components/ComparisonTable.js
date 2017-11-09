@@ -89,8 +89,9 @@ export default class ComparisonTable extends Component {
   }
 
   availableAddColumnOptions = async () => {
+    const { selectedColumnKeys } = this.state;
     const options = await this.addColumnOptions();
-    return options.filter(o => !this.state.selectedColumnKeys.includes(o.key));
+    return options.filter(o => !selectedColumnKeys.includes(o.key));
   }
 
   render() {
@@ -126,6 +127,7 @@ export default class ComparisonTable extends Component {
                 <AddColumnButton
                   comparableName={comparableName}
                   onAdd={this.addColumn}
+                  disabled={isLoading}
                   optionsPromise={this.availableAddColumnOptions()}
                 />
               </th>
