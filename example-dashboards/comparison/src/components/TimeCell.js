@@ -1,41 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class TimeCell extends Component {
-  state = {
-    value: null,
+const text = (value, isLoading) => {
+  if (isLoading) {
+    return '⋯';
   }
-
-  constructor(props) {
-    super(props);
-    this.fetchAnalytics(props);
+  if (value) {
+    return `${(value / 1000).toFixed(2)}s`;
   }
+  return 'N/A';
+}
 
-  componentWillReceiveProps(newProps) {
-    this.fetchAnalytics(newProps);
-  }
-
-  fetchAnalytics = async ({ fromDate, toDate, licenseKey, columnKey, queryBuilder, aggregation,
-    dimension, aggregationParam, comparableKey }) => {
-      const { rows } = await queryBuilder[aggregation](dimension, aggregationParam)
-        .licenseKey(licenseKey)
-        .between(fromDate, toDate)
-        .filter(comparableKey, 'EQ', columnKey)
-        .filter(dimension, 'GT', 0)
-        .filter('PAGE_LOAD_TYPE', 'EQ', 1)
-        .query();
-
-      const value = rows[0] ? rows[0][0] : null;
-
-      this.setState({ value });
-    }
-
-  render() {
-    const { value } = this.state;
-
-    return (
-      <td>
-        {value ? `${(value / 1000).toFixed(2)}s` : 'N/A'}
-      </td>
-    );
-  }
+export default function TimeCell({ value, loading }) {
+  return (
+    <td>
+      {text(value, loading)}
+    </td>
+  );
 }
