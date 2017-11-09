@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class CountryCell extends Component {
+export default class TimeCell extends Component {
   state = {
     value: null,
   }
@@ -14,16 +14,17 @@ export default class CountryCell extends Component {
     this.fetchAnalytics(newProps);
   }
 
-  fetchAnalytics = async ({ fromDate, toDate, licenseKey, country, queryBuilder, aggregation,
-    dimension, aggregationParam }) => {
+  fetchAnalytics = async ({ fromDate, toDate, licenseKey, columnKey, queryBuilder, aggregation,
+    dimension, aggregationParam, comparableKey }) => {
       const { rows } = await queryBuilder[aggregation](dimension, aggregationParam)
         .licenseKey(licenseKey)
         .between(fromDate, toDate)
-        .filter('COUNTRY', 'EQ', country)
+        .filter(comparableKey, 'EQ', columnKey)
         .filter(dimension, 'GT', 0)
         .query();
 
       const value = rows[0] ? rows[0][0] : null;
+
       this.setState({ value });
     }
 

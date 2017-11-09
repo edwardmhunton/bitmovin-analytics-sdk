@@ -1,5 +1,5 @@
 import React from 'react';
-import CountryCell from './CountryCell.js';
+import TimeCell from './TimeCell.js';
 import './ComparisonTableBody.css';
 
 const dimensions = ['STARTUPTIME', 'PLAYER_STARTUPTIME', 'VIDEO_STARTUPTIME'];
@@ -30,18 +30,19 @@ const nameForQuery = (query) => {
 }
 
 export default function ComparisonTableBody(props) {
-  const { selectedCountries, fromDate, toDate, licenseKey, queryBuilder } = props;
+  const { selectedColumnKeys, fromDate, toDate, licenseKey, queryBuilder, comparableKey } = props;
 
   return (
     <tbody className="ComparisonTableBody">
       {queries.map(q =>
-        <tr key={`${q.country}-${q.dimension}-${q.aggregation}-${q.aggregationParam}`}>
+        <tr key={`${q.columnKey}-${q.dimension}-${q.aggregation}-${q.aggregationParam}`}>
           <td>{nameForQuery(q)}</td>
-          {selectedCountries.map(country =>
-            <CountryCell
+          {selectedColumnKeys.map(columnKey =>
+            <TimeCell
               {...q}
-              key={country}
-              country={country}
+              key={columnKey}
+              columnKey={columnKey}
+              comparableKey={comparableKey}
               fromDate={fromDate}
               toDate={toDate}
               licenseKey={licenseKey}

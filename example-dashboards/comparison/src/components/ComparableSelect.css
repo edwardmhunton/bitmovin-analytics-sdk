@@ -4,4 +4,5 @@ div.ComparableSelect {
 
 .ComparableSelect select {
   width: auto;
+  text-transform: capitalize;
 }
