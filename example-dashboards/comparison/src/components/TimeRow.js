@@ -1,22 +1,6 @@
 import React, { Component } from 'react';
 import TimeCell from './TimeCell.js';
 
-const dimensionNames = {
-  STARTUPTIME: 'Total Startup Time',
-  PLAYER_STARTUPTIME: 'Player Startup Time',
-  VIDEO_STARTUPTIME: 'Video Startup Time',
-}
-const aggregationName = ({ aggregation, aggregationParam }) => {
-  switch (aggregation) {
-    case 'percentile':
-      return `${aggregationParam}th percentile`;
-    default:
-      return aggregation;
-  }
-}
-const nameForQuery = (query) => {
-  return `${dimensionNames[query.dimension]} (${aggregationName(query)})`;
-}
 export default class TimeRow extends Component {
   state = {
     values: [],
@@ -34,15 +18,14 @@ export default class TimeRow extends Component {
 
   fetchAnalytics = async ({ query, columnKeys, queryBuilder }) => {
       const { aggregation, dimension, aggregationParam, licenseKey, fromDate, toDate,
-        comparableKey } = query;
+        comparableKey, filters } = query;
       const runningQueries = columnKeys.map(columnKey => {
-        return queryBuilder[aggregation](dimension, aggregationParam)
+        const baseQuery = queryBuilder[aggregation](dimension, aggregationParam)
           .licenseKey(licenseKey)
           .between(fromDate, toDate)
           .filter(comparableKey, 'EQ', columnKey)
-          .filter(dimension, 'GT', 0)
-          .filter('PAGE_LOAD_TYPE', 'EQ', 1)
-          .query();
+        const filteredQuery = filters.reduce((q, filterParams) => q.filter(...filterParams), baseQuery);
+        return filteredQuery.query();
       })
 
       const queryResults = await Promise.all(runningQueries);
@@ -56,11 +39,19 @@ export default class TimeRow extends Component {
     const { values } = this.state;
     const isLoading = values.length !== columnKeys.length;
 
+    const sortedValues = values.filter(v => v !== null).sort((a, b) => a - b);
+    const [lowestValue, ...highestValues] = sortedValues;
+    const [highestValue,] = highestValues.reverse();
+
+    // TODO: Set label on all queries
     return (
       <tr>
-        <td>{nameForQuery(query)}</td>
+        <td>{query.label}</td>
         {columnKeys.map((key, index) =>
-          <TimeCell key={key} value={values[index]} loading={isLoading} allValues={values} />
+          React.createElement(
+            query.cellType,
+            { key, value: values[index], loading: isLoading, highestValue, lowestValue }
+          )
         )}
         <td></td>
       </tr>
