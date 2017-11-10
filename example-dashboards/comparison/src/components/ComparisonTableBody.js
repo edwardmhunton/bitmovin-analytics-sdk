@@ -4,11 +4,13 @@ import queries from './lib/queries.js';
 import './ComparisonTableBody.css';
 
 export default function ComparisonTableBody(props) {
-  const { selectedColumnKeys, fromDate, toDate, licenseKey, queryBuilder, comparableKey } = props;
+  const { selectedColumnKeys, fromDate, toDate, licenseKey, queryBuilder, comparableKey,
+    filters } = props;
+  const filteredQueries = queries.map(q => ({ ...q, filters: [...q.filters, ...filters] }));
 
   return (
     <tbody className="ComparisonTableBody">
-      {queries.map(q =>
+      {filteredQueries.map(q =>
         <ComparisonTableRow
           key={q.label}
           query={{ ...q, fromDate, toDate, licenseKey, comparableKey }}

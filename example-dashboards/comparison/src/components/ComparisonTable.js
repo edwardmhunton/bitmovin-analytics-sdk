@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import countryList from 'country-list';
-import Bitmovin from 'bitmovin-javascript';
 import ComparableSelect, { initialComparableKey, getSingleName } from './ComparableSelect.js';
 import AddColumnButton from './AddColumnButton.js';
 import ComparisonTableBody from './ComparisonTableBody.js';
@@ -10,11 +9,9 @@ import './ComparisonTable.css';
 const countries = countryList();
 
 export default class ComparisonTable extends Component {
-  constructor({ apiKey, licenseKey, fromDate, toDate }) {
+  constructor() {
     super();
-    const bitmovin = new Bitmovin({ apiKey });
     this.state = {
-      queryBuilder: bitmovin.analytics.queries.builder,
       selectedColumnKeys: [],
       currentComparableKey: initialComparableKey,
       players: [],
@@ -29,7 +26,7 @@ export default class ComparisonTable extends Component {
   }
 
   fetchPlayers = async () => {
-    const { rows } = await this.state.queryBuilder
+    const { rows } = await this.props.queryBuilder
       .count('STARTUPTIME')
       .licenseKey(this.props.licenseKey)
       .between(this.props.fromDate, this.props.toDate)
@@ -95,8 +92,8 @@ export default class ComparisonTable extends Component {
   }
 
   render() {
-    const { fromDate, toDate, licenseKey } = this.props;
-    const { selectedColumnKeys, queryBuilder, currentComparableKey, isLoading } = this.state;
+    const { fromDate, toDate, licenseKey, queryBuilder, filters } = this.props;
+    const { selectedColumnKeys, currentComparableKey, isLoading } = this.state;
     const comparableName = getSingleName(currentComparableKey);
 
     const removeTooltip = (
@@ -140,6 +137,7 @@ export default class ComparisonTable extends Component {
             toDate={toDate}
             licenseKey={licenseKey}
             queryBuilder={queryBuilder}
+            filters={filters}
           />
         </Table>
       </div>

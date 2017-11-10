@@ -1,0 +1,13 @@
+.Filters {
+  margin-top: 6rem;
+}
+
+.Filters h2 {
+  font-size: 1.7rem;
+  font-weight: 200;
+  letter-spacing: 0.1rem;
+}
+
+.Filters-list {
+  display: flex;
+}
