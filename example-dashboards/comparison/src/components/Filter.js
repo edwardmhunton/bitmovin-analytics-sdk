@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import './Filter.css';
 
 export default class Filter extends Component {
   state = {
@@ -31,7 +32,7 @@ export default class Filter extends Component {
     const { filterOptions } = this.state;
 
     return (
-      <FormGroup controlId={`${name}Filter`} className="Filter">
+      <FormGroup controlId={`${name}Filter`} className="Filter"  bsSize="small">
         <ControlLabel>{name}</ControlLabel>
         <FormControl
           componentClass="select"

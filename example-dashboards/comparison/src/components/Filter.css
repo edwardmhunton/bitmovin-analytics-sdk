@@ -1,0 +1,18 @@
+div.Filter {
+  margin: 0 0 0 2rem;
+  padding-left: 2rem;
+  border-left: 1px solid #AAA;
+  display: flex;
+  align-items: center;
+}
+
+.Filter label {
+  margin: 0;
+  font-weight: normal;
+}
+
+.Filter select {
+  display: inline-block;
+  width: auto;
+  margin-left: 1rem;
+}
