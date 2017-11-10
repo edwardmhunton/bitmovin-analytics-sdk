@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import TimeCell from './TimeCell.js';
 
-export default class TimeRow extends Component {
+export default class ComparisonTableRow extends Component {
   state = {
     values: [],
   }

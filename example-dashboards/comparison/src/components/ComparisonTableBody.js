@@ -1,5 +1,5 @@
 import React from 'react';
-import TimeRow from './TimeRow.js';
+import ComparisonTableRow from './ComparisonTableRow.js';
 import queries from './lib/queries.js';
 import './ComparisonTableBody.css';
 
@@ -9,7 +9,7 @@ export default function ComparisonTableBody(props) {
   return (
     <tbody className="ComparisonTableBody">
       {queries.map(q =>
-        <TimeRow
+        <ComparisonTableRow
           key={q.label}
           query={{ ...q, fromDate, toDate, licenseKey, comparableKey }}
           columnKeys={selectedColumnKeys}

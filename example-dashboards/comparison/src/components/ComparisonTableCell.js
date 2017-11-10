@@ -1,5 +1,5 @@
 import React from 'react';
-import './TableCell.css';
+import './ComparisonTableCell.css';
 
 const text = ({ loading, children, value }) => {
   if (loading) {
@@ -26,9 +26,9 @@ const className = ({ value, loading, highestValue, lowestValue, best }) => {
   }
 }
 
-export default function TableCell(props) {
+export default function ComparisonTableCell(props) {
   return (
-    <td className={`TableCell ${className(props)}`}>
+    <td className={`ComparisonTableCell ${className(props)}`}>
       {text(props)}
     </td>
   )

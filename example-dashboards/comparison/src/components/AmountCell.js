@@ -1,10 +1,10 @@
 import React from 'react';
-import TableCell from './TableCell.js';
+import ComparisonTableCell from './ComparisonTableCell.js';
 
 export default function TimeCell(props) {
   return (
-    <TableCell {...props} best="highest">
+    <ComparisonTableCell {...props} best="highest">
       {props.value}
-    </TableCell>
+    </ComparisonTableCell>
   );
 }
