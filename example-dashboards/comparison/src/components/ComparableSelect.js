@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import attributes from './lib/attributes.js';
 import './ComparableSelect.css';
 
-const comparables = [
-  Object.freeze({ collectionName: 'countries', singleName: 'country', key: 'COUNTRY' }),
-  Object.freeze({ collectionName: 'players', singleName: 'player', key: 'PLAYER' }),
-];
+const comparableAttributes = ['COUNTRY', 'PLAYER'];
+const comparables = attributes.filter(a => comparableAttributes.includes(a.attribute));
 
-export const initialComparableKey = comparables[0].key;
+export const initialComparableKey = comparables[0].attribute;
 
-export const getSingleName = (key) => {
-  const comparable = comparables.find(c => c.key === key);
+export const getSingleName = (attribute) => {
+  const comparable = comparables.find(c => c.attribute === attribute);
   return comparable ? comparable.singleName : null;
 }
 
@@ -30,8 +29,8 @@ export default class ComparableSelect extends Component {
           onChange={this.handleChange}
           disabled={disabled}
         >
-          {comparables.map(({ collectionName, key }) =>
-            <option value={key} key={key}>{collectionName}</option>)}
+          {comparables.map(({ collectionName, attribute }) =>
+            <option value={attribute} key={attribute}>{collectionName}</option>)}
         </FormControl>
       </FormGroup>
     );

@@ -12,3 +12,7 @@
   display: flex;
   align-items: center;
 }
+
+.Filters .dropdown-menu {
+  text-transform: capitalize;
+}

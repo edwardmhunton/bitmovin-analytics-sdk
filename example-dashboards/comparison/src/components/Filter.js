@@ -12,15 +12,16 @@ export default class Filter extends Component {
     this.fetchFilterOptions(props);
   }
 
-  fetchFilterOptions = async ({ queryBuilder, licenseKey, fromDate, toDate, name }) => {
+  fetchFilterOptions = async ({ queryBuilder, licenseKey, fromDate, toDate, attribute }) => {
     const { rows } = await queryBuilder
       .count('IMPRESSION_ID')
       .licenseKey(licenseKey)
       .between(fromDate, toDate)
-      .groupBy(name)
+      .groupBy(attribute)
       .query();
     const filterOptions = rows.sort((a, b) => b[1] - a[1]).map(r => r[0]);
     this.setState({ filterOptions });
+    this.props.onChange(filterOptions[0]);
   };
 
   handleChange = (event) => {
@@ -28,12 +29,12 @@ export default class Filter extends Component {
   };
 
   render() {
-    const { name, value } = this.props;
+    const { attribute, value } = this.props;
     const { filterOptions } = this.state;
 
     return (
-      <FormGroup controlId={`${name}Filter`} className="Filter"  bsSize="small">
-        <ControlLabel>{name}</ControlLabel>
+      <FormGroup controlId={`${attribute}Filter`} className="Filter"  bsSize="small">
+        <ControlLabel>{attribute}</ControlLabel>
         <FormControl
           componentClass="select"
           placeholder="select"

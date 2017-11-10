@@ -26,14 +26,14 @@ export default class Main extends Component {
   handleDateRangeChange = ({ fromDate, toDate }) =>
     this.setState({ fromDate, toDate });
 
-  handleFilterAdd = (name) => {
+  handleFilterAdd = (attribute) => {
     const { filters } = this.state;
-    this.setState({ filters: [...filters, { name }] });
+    this.setState({ filters: [...filters, { attribute }] });
   }
 
-  handleFilterUpdate = ({ name, value }) => {
+  handleFilterUpdate = ({ attribute, value }) => {
     const filters = [...this.state.filters];
-    const filter = filters.find(f => f.name === name);
+    const filter = filters.find(f => f.attribute === attribute);
     filter.value = value;
     this.setState({ filters });
   }
@@ -42,8 +42,8 @@ export default class Main extends Component {
     const { licenses } = this.props;
     const { fromDate, toDate, filters, queryBuilder } = this.state;
     const queryFilters = filters
-      .filter(({ name, value }) => value)
-      .map(({ name, value }) => [name, 'EQ', value]);
+      .filter(({ attribute, value }) => value)
+      .map(({ attribute, value }) => [attribute, 'EQ', value]);
     const currentLicenseKey = this.currentLicenseKey();
 
     return (
