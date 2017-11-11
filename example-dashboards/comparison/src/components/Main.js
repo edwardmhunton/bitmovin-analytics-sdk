@@ -38,6 +38,11 @@ export default class Main extends Component {
     this.setState({ filters });
   }
 
+  handleFilterRemove = (attribute) => {
+    const filters = this.state.filters.filter(f => f.attribute !== attribute);
+    this.setState({ filters });
+  }
+
   render() {
     const { licenses } = this.props;
     const { fromDate, toDate, filters, queryBuilder } = this.state;
@@ -62,6 +67,7 @@ export default class Main extends Component {
             <Filters
               onAdd={this.handleFilterAdd}
               onUpdate={this.handleFilterUpdate}
+              onRemove={this.handleFilterRemove}
               filters={filters}
               queryBuilder={queryBuilder}
               fromDate={fromDate}

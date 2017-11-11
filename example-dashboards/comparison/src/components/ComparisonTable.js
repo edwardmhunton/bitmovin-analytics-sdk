@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Table, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import countryList from 'country-list';
 import ComparableSelect, { initialComparableKey, getSingleName } from './ComparableSelect.js';
+import RemoveButton from './RemoveButton.js';
 import AddColumnButton from './AddColumnButton.js';
 import ComparisonTableBody from './ComparisonTableBody.js';
 import './ComparisonTable.css';
@@ -96,10 +97,6 @@ export default class ComparisonTable extends Component {
     const { selectedColumnKeys, currentComparableKey, isLoading } = this.state;
     const comparableName = getSingleName(currentComparableKey);
 
-    const removeTooltip = (
-      <Tooltip id="tooltip">Remove this {comparableName}.</Tooltip>
-    );
-
     return (
       <div className="ComparisonTable">
         <Table className={isLoading && 'isLoading'}>
@@ -114,9 +111,11 @@ export default class ComparisonTable extends Component {
               </th>
               {selectedColumnKeys.map((columnKey, index) =>
                 <th key={`header-${columnKey}`}>
-                  <OverlayTrigger placement="top" overlay={removeTooltip}>
-                    <Button bsSize="xsmall" className="remove" onClick={this.removeColumn(columnKey)}>–</Button>
-                  </OverlayTrigger>
+                  <RemoveButton
+                    id={`${columnKey}ColumnRemoveButton`}
+                    tooltip={`Remove this ${comparableName}.`}
+                    onClick={this.removeColumn(columnKey)}
+                  />
                   {this.columnName(columnKey)}
                 </th>
               )}

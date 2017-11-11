@@ -24,16 +24,3 @@
   padding-top: 1.3rem;
   padding-bottom: 1.3rem;
 }
-
-.ComparisonTable button {
-  font-size: 2rem;
-  font-weight: 100;
-  line-height: 1.6rem;
-  padding: 0 0.4rem 0.3rem 0.4rem;
-  margin-top: -0.3rem;
-}
-
-.ComparisonTable button.remove {
-  margin-right: 1rem;
-  border: 1px solid #EEE;
-}

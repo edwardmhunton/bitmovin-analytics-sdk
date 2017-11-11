@@ -4,8 +4,9 @@ import Filter from './Filter.js'
 import attributes from './lib/attributes.js';
 import './Filters.css';
 
-export default function Filters ({ onAdd, onUpdate, filters, queryBuilder, licenseKey, fromDate, toDate }) {
+export default function Filters ({ onAdd, onUpdate, onRemove, filters, queryBuilder, licenseKey, fromDate, toDate }) {
   const updateFilter = (attribute) => (value) => onUpdate({ attribute, value });
+  const removeFilter = (attribute) => () => onRemove(attribute);
   const existingFilterNames = filters.map(f => f.attribute);
   const unusedFilterItems = attributes.filter(i => !existingFilterNames.includes(i.attribute));
   const noMoreFilters = unusedFilterItems.length === 0;
@@ -26,6 +27,7 @@ export default function Filters ({ onAdd, onUpdate, filters, queryBuilder, licen
             fromDate={fromDate}
             toDate={toDate}
             onChange={updateFilter(filter.attribute)}
+            onRemove={removeFilter(filter.attribute)}
           />
         )}
       </div>

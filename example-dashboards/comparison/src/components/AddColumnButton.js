@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import SymbolButton from './SymbolButton.js';
 import AddColumnModal from './AddColumnModal.js';
 
 export default class AddColumnButton extends Component {
@@ -37,22 +37,17 @@ export default class AddColumnButton extends Component {
     const { options, showAddColumnModal } = this.state;
     const noMoreOptions = options.length === 0;
 
-    const addTooltip = (
-      <Tooltip id="tooltip">Add another {comparableName}</Tooltip>
-    );
-
     return (
       <div>
-        <OverlayTrigger placement="top" overlay={addTooltip} rootClose>
-          <Button
-            bsStyle="primary"
-            bsSize="xsmall"
-            disabled={noMoreOptions || disabled}
-            onClick={this.handleAddButtonClick}
-          >
-            +
-          </Button>
-        </OverlayTrigger>
+        <SymbolButton
+          id="addColumn"
+          tooltip={`Add another ${comparableName}.`}
+          bsStyle="primary"
+          disabled={noMoreOptions || disabled}
+          onClick={this.handleAddButtonClick}
+        >
+          +
+        </SymbolButton>
         <AddColumnModal
           onAdd={onAdd}
           show={showAddColumnModal}
