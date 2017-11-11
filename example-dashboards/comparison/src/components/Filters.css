@@ -1,5 +1,5 @@
 .Filters {
-  margin-top: 6rem;
+  margin-top: 10rem;
 }
 
 .Filters h2 {
@@ -16,8 +16,8 @@
 }
 
 .Filters-list > :not(:last-child) {
-  margin-right: 2rem;
-  padding-right: 2rem;
+  margin-right: 3rem;
+  padding-right: 3rem;
   border-right: 1px solid #AAA;
 }
 

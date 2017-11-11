@@ -47,35 +47,37 @@ export default class Main extends Component {
     const currentLicenseKey = this.currentLicenseKey();
 
     return (
-      <Panel className="Main-container">
-        <form>
-          <div className="Main-titleRow">
-            <h1>Compare</h1>
-            {licenses.length > 1 && <LicenseKeySelect
-              currentLicenseKey={currentLicenseKey}
-              handleLicenseChange={this.handleLicenseChange}
-              licenses={licenses}
-            />}
-          </div>
-          <DateRangeSelection fromDate={fromDate} toDate={toDate} onChange={this.handleDateRangeChange}/>
-          <Filters
-            onAdd={this.handleFilterAdd}
-            onUpdate={this.handleFilterUpdate}
-            filters={filters}
-            queryBuilder={queryBuilder}
-            fromDate={fromDate}
-            toDate={toDate}
-            licenseKey={currentLicenseKey}
-          />
-          <ComparisonTable
-            fromDate={fromDate}
-            toDate={toDate}
-            licenseKey={currentLicenseKey}
-            queryBuilder={queryBuilder}
-            filters={queryFilters}
-          />
-        </form>
-      </Panel>
+      <div className="Main-container">
+        {licenses.length > 1 && <LicenseKeySelect
+          currentLicenseKey={currentLicenseKey}
+          handleLicenseChange={this.handleLicenseChange}
+          licenses={licenses}
+        />}
+        <Panel>
+          <form>
+            <div className="Main-titleRow">
+              <h1>Compare</h1>
+              <DateRangeSelection fromDate={fromDate} toDate={toDate} onChange={this.handleDateRangeChange}/>
+            </div>
+            <Filters
+              onAdd={this.handleFilterAdd}
+              onUpdate={this.handleFilterUpdate}
+              filters={filters}
+              queryBuilder={queryBuilder}
+              fromDate={fromDate}
+              toDate={toDate}
+              licenseKey={currentLicenseKey}
+            />
+            <ComparisonTable
+              fromDate={fromDate}
+              toDate={toDate}
+              licenseKey={currentLicenseKey}
+              queryBuilder={queryBuilder}
+              filters={queryFilters}
+            />
+          </form>
+        </Panel>
+      </div>
     );
   }
 }
