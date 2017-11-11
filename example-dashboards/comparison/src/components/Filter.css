@@ -9,6 +9,7 @@ div.Filter {
 .Filter label {
   margin: 0;
   font-weight: normal;
+  text-transform: capitalize;
 }
 
 .Filter select {

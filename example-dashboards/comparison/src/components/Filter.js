@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import attributes from './lib/attributes.js';
 import './Filter.css';
 
 export default class Filter extends Component {
@@ -31,10 +32,11 @@ export default class Filter extends Component {
   render() {
     const { attribute, value } = this.props;
     const { filterOptions } = this.state;
+    const label = attributes.find(a => a.attribute === attribute).singleName;
 
     return (
       <FormGroup controlId={`${attribute}Filter`} className="Filter"  bsSize="small">
-        <ControlLabel>{attribute}</ControlLabel>
+        <ControlLabel>{label}</ControlLabel>
         <FormControl
           componentClass="select"
           placeholder="select"
