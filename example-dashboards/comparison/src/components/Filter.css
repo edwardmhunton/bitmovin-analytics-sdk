@@ -1,7 +1,4 @@
 div.Filter {
-  margin: 0 0 0 2rem;
-  padding-left: 2rem;
-  border-left: 1px solid #AAA;
   display: flex;
   align-items: center;
 }
