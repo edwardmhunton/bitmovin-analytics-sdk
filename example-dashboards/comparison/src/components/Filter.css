@@ -1,6 +1,7 @@
 div.Filter {
   display: flex;
   align-items: center;
+  height: 3.4rem;
 }
 
 .Filter label {

@@ -10,14 +10,16 @@
   opacity: 0.7;
 }
 
+.ComparisonTable .headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .ComparisonTable .table > thead > tr > th {
   line-height: 3.2rem;
   padding-top: 0.6rem;
   padding-bottom: 0.6rem;
-}
-
-.ComparisonTable th:nth-child(n+2) {
-  text-align: right;
 }
 
 .ComparisonTable .table > tbody > tr > td {

@@ -14,22 +14,24 @@ export default function Filters ({ onAdd, onUpdate, onRemove, filters, queryBuil
   return (
     <div className="Filters">
       <h2>Filters</h2>
-      <div className="Filters-list">
+      <div className="Filters-box">
         <DropdownButton title={'Add a filter'} onSelect={onAdd} id="addFilter" disabled={noMoreFilters}>
           {unusedFilterItems.map(({ attribute, singleName }) =>
             <MenuItem key={attribute} eventKey={attribute}>{singleName}</MenuItem>)}
         </DropdownButton>
-        {filters.map(filter =>
-          <Filter {...filter}
-            key={filter.attribute}
-            queryBuilder={queryBuilder}
-            licenseKey={licenseKey}
-            fromDate={fromDate}
-            toDate={toDate}
-            onChange={updateFilter(filter.attribute)}
-            onRemove={removeFilter(filter.attribute)}
-          />
-        )}
+        <div className="Filters-list">
+          {filters.map(filter =>
+            <Filter {...filter}
+              key={filter.attribute}
+              queryBuilder={queryBuilder}
+              licenseKey={licenseKey}
+              fromDate={fromDate}
+              toDate={toDate}
+              onChange={updateFilter(filter.attribute)}
+              onRemove={removeFilter(filter.attribute)}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

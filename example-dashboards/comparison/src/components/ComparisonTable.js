@@ -103,12 +103,14 @@ export default class ComparisonTable extends Component {
               </th>
               {selectedColumnKeys.map((columnKey, index) =>
                 <th key={`header-${columnKey}`}>
-                  <RemoveButton
-                    id={`${columnKey}ColumnRemoveButton`}
-                    tooltip={`Remove this ${comparableName}.`}
-                    onClick={this.removeColumn(columnKey)}
-                  />
-                  {attributeValue(currentComparableKey, columnKey)}
+                  <div className="headerContainer">
+                    <RemoveButton
+                      id={`${columnKey}ColumnRemoveButton`}
+                      tooltip={`Remove this ${comparableName}.`}
+                      onClick={this.removeColumn(columnKey)}
+                    />
+                    {attributeValue(currentComparableKey, columnKey)}
+                  </div>
                 </th>
               )}
               <th>
