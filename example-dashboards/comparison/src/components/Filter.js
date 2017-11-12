@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import RemoveButton from './RemoveButton.js';
-import attributes from './lib/attributes.js';
+import attributes, { attributeValue } from './lib/attributes.js';
 import './Filter.css';
 
 export default class Filter extends Component {
@@ -59,7 +59,7 @@ export default class Filter extends Component {
           disabled={isLoading}
         >
           {filterOptions.map((option) =>
-            <option value={option} key={option}>{option || 'None'}</option>)}
+            <option value={option} key={option}>{attributeValue(attribute, option)}</option>)}
         </FormControl>
       </FormGroup>
     )

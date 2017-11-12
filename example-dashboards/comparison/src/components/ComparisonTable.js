@@ -5,6 +5,7 @@ import ComparableSelect, { initialComparableKey, getSingleName } from './Compara
 import RemoveButton from './RemoveButton.js';
 import AddColumnButton from './AddColumnButton.js';
 import ComparisonTableBody from './ComparisonTableBody.js';
+import { attributeValue } from './lib/attributes.js';
 import './ComparisonTable.css';
 
 const countries = countryList();
@@ -45,15 +46,6 @@ export default class ComparisonTable extends Component {
         return players.slice(-3);
       default:
         return [];
-    }
-  }
-
-  columnName = (columnKey) => {
-    switch (this.state.currentComparableKey) {
-      case 'COUNTRY':
-        return countries.getName(columnKey);
-      default:
-        return columnKey;
     }
   }
 
@@ -116,7 +108,7 @@ export default class ComparisonTable extends Component {
                     tooltip={`Remove this ${comparableName}.`}
                     onClick={this.removeColumn(columnKey)}
                   />
-                  {this.columnName(columnKey)}
+                  {attributeValue(currentComparableKey, columnKey)}
                 </th>
               )}
               <th>
