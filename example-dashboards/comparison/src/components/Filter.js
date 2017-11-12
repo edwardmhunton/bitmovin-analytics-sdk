@@ -6,12 +6,20 @@ import './Filter.css';
 
 export default class Filter extends Component {
   state = {
+    isLoading: true,
     filterOptions: [],
   };
 
   constructor(props) {
     super();
     this.fetchFilterOptions(props);
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.fromDate !== this.props.fromDate || newProps.toDate !== this.props.toDate) {
+      this.setState({ isLoading: true });
+      this.fetchFilterOptions(newProps);
+    }
   }
 
   fetchFilterOptions = async ({ queryBuilder, licenseKey, fromDate, toDate, attribute }) => {
@@ -22,7 +30,7 @@ export default class Filter extends Component {
       .groupBy(attribute)
       .query();
     const filterOptions = rows.sort((a, b) => b[1] - a[1]).map(r => r[0]);
-    this.setState({ filterOptions });
+    this.setState({ filterOptions, isLoading: false });
     this.props.onChange(filterOptions[0]);
   };
 
@@ -32,7 +40,7 @@ export default class Filter extends Component {
 
   render() {
     const { attribute, value, onRemove } = this.props;
-    const { filterOptions } = this.state;
+    const { filterOptions, isLoading } = this.state;
     const label = attributes.find(a => a.attribute === attribute).singleName;
 
     return (
@@ -48,7 +56,7 @@ export default class Filter extends Component {
           placeholder="select"
           value={value || filterOptions[0] || ''}
           onChange={this.handleChange}
-          disabled={false}
+          disabled={isLoading}
         >
           {filterOptions.map((option) =>
             <option value={option} key={option}>{option || 'None'}</option>)}
