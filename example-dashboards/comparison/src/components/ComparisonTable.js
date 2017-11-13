@@ -27,12 +27,12 @@ export default class ComparisonTable extends Component {
     this.setState({ selectedColumnKeys, isLoading: false });
   }
 
-  fetchPlayers = async () => {
+  fetchAttributeValues = async (attribute) => {
     const { rows } = await this.props.queryBuilder
       .count('STARTUPTIME')
       .licenseKey(this.props.licenseKey)
       .between(this.props.fromDate, this.props.toDate)
-      .groupBy('PLAYER')
+      .groupBy(attribute)
       .query();
     return rows.map(row => row[0]);
   }
@@ -42,8 +42,9 @@ export default class ComparisonTable extends Component {
       case 'COUNTRY':
         return ['US', 'AT', 'DE'];
       case 'PLAYER':
-        const players = await this.fetchPlayers();
-        return players.slice(-3);
+      case 'BROWSER':
+        const values = await this.fetchAttributeValues(comparableKey);
+        return values.slice(-3);
       default:
         return [];
     }
@@ -66,13 +67,16 @@ export default class ComparisonTable extends Component {
   }
 
   addColumnOptions = async () => {
-    switch (this.state.currentComparableKey) {
+    const { currentComparableKey } = this.state;
+
+    switch (currentComparableKey) {
       case 'COUNTRY':
         const availableCountries = countries.getData();
         return availableCountries.map(({ code, name }) => ({ key: code, name }));
       case 'PLAYER':
-        const players = await this.fetchPlayers();
-        return players.map(name => ({ key: name, name }));
+      case 'BROWSER':
+        const values = await this.fetchAttributeValues(currentComparableKey);
+        return values.map(name => ({ key: name, name }));
       default:
         return [];
     }
