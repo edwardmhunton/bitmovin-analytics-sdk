@@ -93,7 +93,6 @@ export default class ComparisonTable extends Component {
     const { fromDate, toDate, licenseKey, queryBuilder, filters } = this.props;
     const { selectedColumnKeys, currentComparableKey, isLoading } = this.state;
     const comparableName = getSingleName(currentComparableKey);
-    console.log(queryGroups);
 
     return (
       <div className="ComparisonTable">
