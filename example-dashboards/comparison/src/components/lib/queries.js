@@ -12,7 +12,7 @@ const aggregations = [
   { name: 'percentile', param: 95, label: '95th percentile' }
 ]
 
-let queries = dimensions
+const startupTimeQueries = dimensions
   .map(dimension => aggregations.map((aggregation) => ({
     dimension: dimension.name,
     aggregation: aggregation.name,
@@ -26,10 +26,9 @@ let queries = dimensions
   })))
   .reduce((totalArray, dimArray) => [...totalArray, ...dimArray], []); // flatten
 
-queries = [
-  ...queries,
+const impressionQueries = [
   {
-    label: 'Impressions',
+    label: 'Total impressions',
     dimension: 'IMPRESSION_ID',
     aggregation: 'count',
     filters: [['VIDEO_STARTUPTIME', 'GT', 0]],
@@ -51,4 +50,9 @@ queries = [
   },
 ];
 
-export default queries;
+const queryGroups = [
+  { label: 'Impressions', queries: impressionQueries },
+  { label: 'Startup times', queries: startupTimeQueries },
+]
+
+export default queryGroups;

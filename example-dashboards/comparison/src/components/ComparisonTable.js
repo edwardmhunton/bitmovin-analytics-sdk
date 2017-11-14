@@ -6,6 +6,7 @@ import RemoveButton from './RemoveButton.js';
 import AddColumnButton from './AddColumnButton.js';
 import ComparisonTableBody from './ComparisonTableBody.js';
 import { attributeValue } from './lib/attributes.js';
+import queryGroups from './lib/queries.js';
 import './ComparisonTable.css';
 
 const countries = countryList();
@@ -92,6 +93,7 @@ export default class ComparisonTable extends Component {
     const { fromDate, toDate, licenseKey, queryBuilder, filters } = this.props;
     const { selectedColumnKeys, currentComparableKey, isLoading } = this.state;
     const comparableName = getSingleName(currentComparableKey);
+    console.log(queryGroups);
 
     return (
       <div className="ComparisonTable">
@@ -127,15 +129,20 @@ export default class ComparisonTable extends Component {
               </th>
             </tr>
           </thead>
-          <ComparisonTableBody
-            selectedColumnKeys={selectedColumnKeys}
-            comparableKey={currentComparableKey}
-            fromDate={fromDate}
-            toDate={toDate}
-            licenseKey={licenseKey}
-            queryBuilder={queryBuilder}
-            filters={filters}
-          />
+          {queryGroups.map(({ label, queries }) =>
+            <ComparisonTableBody
+              key={label}
+              selectedColumnKeys={selectedColumnKeys}
+              comparableKey={currentComparableKey}
+              fromDate={fromDate}
+              toDate={toDate}
+              licenseKey={licenseKey}
+              queryBuilder={queryBuilder}
+              queries={queries}
+              groupLabel={label}
+              filters={filters}
+            />
+          )}
         </Table>
       </div>
     );
