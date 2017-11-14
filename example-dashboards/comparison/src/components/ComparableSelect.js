@@ -3,7 +3,7 @@ import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import attributes from './lib/attributes.js';
 import './ComparableSelect.css';
 
-const comparableAttributes = ['COUNTRY', 'PLAYER', 'BROWSER'];
+const comparableAttributes = ['COUNTRY', 'PLAYER', 'BROWSER', 'EXPERIMENT_NAME'];
 const comparables = attributes.filter(a => comparableAttributes.includes(a.attribute));
 
 export const initialComparableKey = comparables[0].attribute;

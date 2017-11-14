@@ -44,8 +44,9 @@ export default class ComparisonTable extends Component {
         return ['US', 'AT', 'DE'];
       case 'PLAYER':
       case 'BROWSER':
+      case 'EXPERIMENT_NAME':
         const values = await this.fetchAttributeValues(comparableKey);
-        return values.slice(-3);
+        return values.filter(v => v !== null).slice(-3);
       default:
         return [];
     }
@@ -76,6 +77,7 @@ export default class ComparisonTable extends Component {
         return availableCountries.map(({ code, name }) => ({ key: code, name }));
       case 'PLAYER':
       case 'BROWSER':
+      case 'EXPERIMENT_NAME':
         const values = await this.fetchAttributeValues(currentComparableKey);
         return values.map(name => ({ key: name, name }));
       default:
