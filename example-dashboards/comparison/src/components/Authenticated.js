@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import Bitmovin from 'bitmovin-javascript';
-import { Panel } from 'react-bootstrap';
+import { Panel, FormGroup, ControlLabel, FormControl, HelpBlock, Button } from 'react-bootstrap';
 import './Authenticated.css';
 
 export default class Authenticated extends Component {
@@ -46,10 +46,30 @@ export default class Authenticated extends Component {
       );
     }
 
-    // remaining case: login error
+    // remaining case: not logged in
+    const apiKey = this.apiKey();
+    const loginFailed = apiKey && apiKey.length > 0;
+    const validationState = loginFailed ? 'error' : null;
+    const error = loginFailed ? "Please check your API key." : null;
+
     return (
-      <Panel header="Login error" className="Authenticated-loginError">
-        <p>Unable to log in. Please check your internet connection and your API key.</p>
+      <Panel header="Sign in" className="Authenticated-login">
+        <form>
+          <FormGroup
+            controlId="formBasicText"
+            validationState={validationState}
+          >
+            <ControlLabel>Your API key</ControlLabel>
+            <FormControl
+              type="text"
+              placeholder="Bitmovin API key"
+              name="apiKey"
+            />
+            <FormControl.Feedback />
+            {error && <HelpBlock>{error}</HelpBlock>}
+          </FormGroup>
+          <Button bsStyle="primary" type="submit">Sign in</Button>
+        </form>
       </Panel>
     );
   }
