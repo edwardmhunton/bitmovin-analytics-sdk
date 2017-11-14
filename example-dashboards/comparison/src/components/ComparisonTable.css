@@ -26,8 +26,3 @@
   padding-top: 1.3rem;
   padding-bottom: 1.3rem;
 }
-
-.ComparisonTable .table > thead > tr > th:first-child,
-.ComparisonTable .table > tbody > tr > td:first-child {
-  padding-left: 2.5rem;
-}
