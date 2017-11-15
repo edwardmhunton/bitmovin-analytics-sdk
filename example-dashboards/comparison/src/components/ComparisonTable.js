@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
-import countryList from 'country-list';
 import ComparableSelect, { initialComparableKey, getSingleName } from './ComparableSelect.js';
 import RemoveButton from './RemoveButton.js';
 import AddColumnButton from './AddColumnButton.js';
@@ -9,17 +8,14 @@ import { attributeValue } from '../lib/attributes.js';
 import queryGroups from '../lib/queries.js';
 import './ComparisonTable.css';
 
-const countries = countryList();
-
 export default class ComparisonTable extends Component {
-  constructor() {
-    super();
-    this.state = {
-      selectedColumnKeys: [],
-      currentComparableKey: initialComparableKey,
-      players: [],
-      isLoading: true,
-    };
+  state = {
+    selectedColumnKeys: [],
+    currentComparableKey: initialComparableKey,
+    isLoading: true,
+  }
+
+  componentDidMount() {
     this.setInitialColumnKeys();
   }
 
@@ -39,17 +35,8 @@ export default class ComparisonTable extends Component {
   }
 
   initialColumnKeys = async (comparableKey) => {
-    switch (comparableKey) {
-      case 'COUNTRY':
-        return ['US', 'AT', 'DE'];
-      case 'PLAYER':
-      case 'BROWSER':
-      case 'EXPERIMENT_NAME':
-        const values = await this.fetchAttributeValues(comparableKey);
-        return values.filter(v => v !== null).slice(-3);
-      default:
-        return [];
-    }
+    const values = await this.fetchAttributeValues(comparableKey);
+    return values.filter(v => v !== null).slice(-3);
   }
 
   addColumn = (key) => {
@@ -70,19 +57,8 @@ export default class ComparisonTable extends Component {
 
   addColumnOptions = async () => {
     const { currentComparableKey } = this.state;
-
-    switch (currentComparableKey) {
-      case 'COUNTRY':
-        const availableCountries = countries.getData();
-        return availableCountries.map(({ code, name }) => ({ key: code, name }));
-      case 'PLAYER':
-      case 'BROWSER':
-      case 'EXPERIMENT_NAME':
-        const values = await this.fetchAttributeValues(currentComparableKey);
-        return values.map(name => ({ key: name, name }));
-      default:
-        return [];
-    }
+    const values = await this.fetchAttributeValues(currentComparableKey);
+    return values.map(key => ({ key, name: attributeValue(currentComparableKey, key) }));
   }
 
   availableAddColumnOptions = async () => {
