@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import RemoveButton from './RemoveButton.js';
-import attributes, { attributeValue } from '../lib/attributes.js';
+import { allAttributes, attributeValue } from '../lib/attributes.js';
 import './Filter.css';
 
 export default class Filter extends Component {
@@ -41,7 +41,7 @@ export default class Filter extends Component {
   render() {
     const { attribute, value, onRemove } = this.props;
     const { filterOptions, isLoading } = this.state;
-    const label = attributes.find(a => a.attribute === attribute).singleName;
+    const label = allAttributes.find(a => a.attribute === attribute).singleName;
 
     return (
       <FormGroup controlId={`${attribute}Filter`} className="Filter"  bsSize="small">

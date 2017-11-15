@@ -11,10 +11,13 @@ export const attributeValue = (attribute, value) => {
   }
 };
 
-export default [
-  Object.freeze({ collectionName: 'countries', singleName: 'country', attribute: 'COUNTRY' }),
-  Object.freeze({ collectionName: 'players', singleName: 'player', attribute: 'PLAYER' }),
-  Object.freeze({ collectionName: 'CDN providers', singleName: 'CDN provider', attribute: 'CDN_PROVIDER' }),
-  Object.freeze({ collectionName: 'browsers', singleName: 'browser', attribute: 'BROWSER' }),
-  Object.freeze({ collectionName: 'experiments', singleName: 'experiment', attribute: 'EXPERIMENT_NAME' }),
+const attributes = [
+  { collectionName: 'countries', singleName: 'country', attribute: 'COUNTRY', comparable: true },
+  { collectionName: 'players', singleName: 'player', attribute: 'PLAYER', comparable: true },
+  { collectionName: 'CDN providers', singleName: 'CDN provider', attribute: 'CDN_PROVIDER' },
+  { collectionName: 'browsers', singleName: 'browser', attribute: 'BROWSER', comparable: true },
+  { collectionName: 'experiments', singleName: 'experiment', attribute: 'EXPERIMENT_NAME' }
 ]
+
+export const allAttributes = attributes.map(a => Object.freeze(a));
+export const comparableAttributes = allAttributes.filter(({ comparable }) => comparable);
