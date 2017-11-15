@@ -1,7 +1,7 @@
 import React from 'react';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import Filter from './Filter.js'
-import attributes from './lib/attributes.js';
+import attributes from '../lib/attributes.js';
 import './Filters.css';
 
 export default function Filters ({ onAdd, onUpdate, onRemove, filters, queryBuilder, licenseKey, fromDate, toDate }) {

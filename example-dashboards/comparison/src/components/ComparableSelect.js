@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import attributes from './lib/attributes.js';
+import attributes from '../lib/attributes.js';
 import './ComparableSelect.css';
 
 const comparableAttributes = ['COUNTRY', 'PLAYER', 'BROWSER', 'EXPERIMENT_NAME'];

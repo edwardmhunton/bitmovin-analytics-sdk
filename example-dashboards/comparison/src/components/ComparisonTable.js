@@ -5,8 +5,8 @@ import ComparableSelect, { initialComparableKey, getSingleName } from './Compara
 import RemoveButton from './RemoveButton.js';
 import AddColumnButton from './AddColumnButton.js';
 import ComparisonTableBody from './ComparisonTableBody.js';
-import { attributeValue } from './lib/attributes.js';
-import queryGroups from './lib/queries.js';
+import { attributeValue } from '../lib/attributes.js';
+import queryGroups from '../lib/queries.js';
 import './ComparisonTable.css';
 
 const countries = countryList();

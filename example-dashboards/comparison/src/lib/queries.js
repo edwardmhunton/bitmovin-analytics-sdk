@@ -1,5 +1,6 @@
-import TimeCell from '../TimeCell.js';
-import AmountCell from '../AmountCell.js';
+// TODO: Decouple queries from components
+import TimeCell from '../components/TimeCell.js';
+import AmountCell from '../components/AmountCell.js';
 
 const dimensions = [
   { name: 'STARTUPTIME', label: 'Total Startup Time' },
