@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import AmountCell from '../components/AmountCell.js';
+import TimeCell from '../components/TimeCell.js';
+
+const cellTypes = {
+  amount: AmountCell,
+  time: TimeCell,
+};
 
 export default class ComparisonTableRow extends Component {
   state = {
@@ -48,7 +55,7 @@ export default class ComparisonTableRow extends Component {
         <td>{query.label}</td>
         {columnKeys.map((key, index) =>
           React.createElement(
-            query.cellType,
+            cellTypes[query.type],
             { key, value: values[index], loading: isLoading, highestValue, lowestValue }
           )
         )}

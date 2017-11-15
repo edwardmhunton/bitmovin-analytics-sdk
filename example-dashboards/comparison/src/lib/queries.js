@@ -1,7 +1,3 @@
-// TODO: Decouple queries from components
-import TimeCell from '../components/TimeCell.js';
-import AmountCell from '../components/AmountCell.js';
-
 const dimensions = [
   { name: 'STARTUPTIME', label: 'Total Startup Time' },
   { name: 'PLAYER_STARTUPTIME', label: 'Player Startup Time' },
@@ -22,7 +18,7 @@ const startupTimeQueries = dimensions
       [dimension.name, 'GT', 0],
       ['PAGE_LOAD_TYPE', 'EQ', 1],
     ],
-    cellType: TimeCell,
+    type: 'time',
     label: `${dimension.label} (${aggregation.label})`,
   })))
   .reduce((totalArray, dimArray) => [...totalArray, ...dimArray], []); // flatten
@@ -33,21 +29,21 @@ const impressionQueries = [
     dimension: 'IMPRESSION_ID',
     aggregation: 'count',
     filters: [['VIDEO_STARTUPTIME', 'GT', 0]],
-    cellType: AmountCell,
+    type: 'amount',
   },
   {
     label: 'Unique Users',
     dimension: 'USER_ID',
     aggregation: 'count',
     filters: [['VIDEO_STARTUPTIME', 'GT', 0]],
-    cellType: AmountCell,
+    type: 'amount',
   },
   {
     label: 'Total page loads',
     dimension: 'IMPRESSION_ID',
     aggregation: 'count',
     filters: [['PLAYER_STARTUPTIME', 'GT', 0]],
-    cellType: AmountCell,
+    type: 'amount',
   },
 ];
 
