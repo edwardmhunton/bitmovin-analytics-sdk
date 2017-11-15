@@ -16,7 +16,7 @@ const attributes = [
   { collectionName: 'players', singleName: 'player', attribute: 'PLAYER', comparable: true },
   { collectionName: 'CDN providers', singleName: 'CDN provider', attribute: 'CDN_PROVIDER' },
   { collectionName: 'browsers', singleName: 'browser', attribute: 'BROWSER', comparable: true },
-  { collectionName: 'experiments', singleName: 'experiment', attribute: 'EXPERIMENT_NAME' }
+  { collectionName: 'experiments', singleName: 'experiment', attribute: 'EXPERIMENT_NAME', comparable: true },
 ]
 
 export const allAttributes = attributes.map(a => Object.freeze(a));
