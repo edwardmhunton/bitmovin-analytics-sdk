@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Bitmovin from 'bitmovin-javascript';
 import { Panel } from 'react-bootstrap';
-import DateRangeSelection, { initialDateRange } from './DateRangeSelection.js';
+import PeriodSelection, { initialPeriod } from './PeriodSelection.js';
 import ComparisonTable from './ComparisonTable.js';
 import LicenseKeySelect from './LicenseKeySelect.js';
 import Filters from './Filters.js';
@@ -10,8 +10,8 @@ import './Main.css';
 export default class Main extends Component {
 
   state = {
-    fromDate: initialDateRange.fromDate(),
-    toDate: initialDateRange.toDate(),
+    fromDate: initialPeriod.fromDate(),
+    toDate: initialPeriod.toDate(),
     filters: [],
     queryBuilder: new Bitmovin({ apiKey: this.props.apiKey }).analytics.queries.builder,
   };
@@ -62,7 +62,7 @@ export default class Main extends Component {
           <form>
             <div className="Main-titleRow">
               <h1>Compare</h1>
-              <DateRangeSelection fromDate={fromDate} toDate={toDate} onChange={this.handleDateRangeChange}/>
+              <PeriodSelection fromDate={fromDate} toDate={toDate} onChange={this.handleDateRangeChange}/>
             </div>
             <Filters
               onAdd={this.handleFilterAdd}

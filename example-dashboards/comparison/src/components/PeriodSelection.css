@@ -1,14 +1,14 @@
-#DateRangeSelection-popover {
+#PeriodSelection-popover {
   padding: 0.5rem 1rem;
   max-width: 60rem;
 }
 
-.DateRangeSelection-dateSelection {
+.PeriodSelection-dateSelection {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
 }
 
-.DateRangeSelection-dateSelection .react-datepicker-popper {
+.PeriodSelection-dateSelection .react-datepicker-popper {
   z-index: 3;
 }
