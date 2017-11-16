@@ -4,7 +4,7 @@ import ComparableSelect, { initialComparableKey, getSingleName } from './Compara
 import RemoveButton from './RemoveButton.js';
 import AddColumnButton from './AddColumnButton.js';
 import ComparisonTableBody from './ComparisonTableBody.js';
-import { attributeValue } from '../lib/attributes.js';
+import { attributeValue, fetchAttributeRows } from '../lib/helpers.js';
 import queryGroups from '../lib/queries.js';
 import './ComparisonTable.css';
 
@@ -25,18 +25,13 @@ export default class ComparisonTable extends Component {
   }
 
   fetchAttributeValues = async (attribute) => {
-    const { rows } = await this.props.queryBuilder
-      .count('STARTUPTIME')
-      .licenseKey(this.props.licenseKey)
-      .between(this.props.fromDate, this.props.toDate)
-      .groupBy(attribute)
-      .query();
+    const rows = await fetchAttributeRows({ ...this.props, attribute });
     return rows.map(row => row[0]);
   }
 
   initialColumnKeys = async (comparableKey) => {
     const values = await this.fetchAttributeValues(comparableKey);
-    return values.filter(v => v !== null).slice(-3);
+    return values.slice(-3);
   }
 
   addColumn = (key) => {
@@ -64,7 +59,7 @@ export default class ComparisonTable extends Component {
   availableAddColumnOptions = async () => {
     const { selectedColumnKeys } = this.state;
     const options = await this.addColumnOptions();
-    return options.filter(o => !selectedColumnKeys.includes(o.key));
+    return options.filter(o => !selectedColumnKeys.includes(o.key))
   }
 
   render() {

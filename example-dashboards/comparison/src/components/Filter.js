@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import RemoveButton from './RemoveButton.js';
-import { allAttributes, attributeValue } from '../lib/attributes.js';
+import { allAttributes } from '../lib/attributes.js';
+import { attributeValue, fetchAttributeRows } from '../lib/helpers.js';
 import './Filter.css';
 
 export default class Filter extends Component {
@@ -23,13 +24,10 @@ export default class Filter extends Component {
   }
 
   fetchFilterOptions = async ({ queryBuilder, licenseKey, fromDate, toDate, attribute }) => {
-    const { rows } = await queryBuilder
-      .count('IMPRESSION_ID')
-      .licenseKey(licenseKey)
-      .between(fromDate, toDate)
-      .groupBy(attribute)
-      .query();
-    const filterOptions = rows.sort((a, b) => b[1] - a[1]).map(r => r[0]);
+    const attributeRows = await fetchAttributeRows({ queryBuilder, licenseKey, fromDate, toDate, attribute })
+    const filterOptions = attributeRows
+      .sort((a, b) => b[1] - a[1])
+      .map(r => r[0]);
     this.setState({ filterOptions, isLoading: false });
     this.props.onChange(filterOptions[0]);
   };
