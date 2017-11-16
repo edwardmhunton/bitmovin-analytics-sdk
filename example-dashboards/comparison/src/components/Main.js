@@ -52,7 +52,7 @@ export default class Main extends Component {
     const currentLicenseKey = this.currentLicenseKey();
 
     return (
-      <div className="Main-container">
+      <div className="Main">
         {licenses.length > 1 && <LicenseKeySelect
           currentLicenseKey={currentLicenseKey}
           handleLicenseChange={this.handleLicenseChange}

@@ -29,7 +29,7 @@ export default class AddColumnModal extends Component {
     const { show, onHide, comparableName, options } = this.props;
 
     return (
-      <Modal show={show} onHide={onHide}>
+      <Modal show={show} onHide={onHide} className="AddColumnModal">
         <Modal.Header closeButton>
           <Modal.Title>Add a {comparableName}</Modal.Title>
         </Modal.Header>

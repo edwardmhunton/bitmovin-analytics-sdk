@@ -60,7 +60,7 @@ export default class PeriodSelection extends Component {
     const { currentLabel } = this.state;
 
     const periodPopover = (
-      <Popover id="PeriodSelection-popover">
+      <Popover id="PeriodSelection" className="PeriodSelection">
         <div className="PeriodSelection-dateSelection">
           <FormGroup controlId="PeriodSelection-fromDate">
             <ControlLabel>From</ControlLabel>

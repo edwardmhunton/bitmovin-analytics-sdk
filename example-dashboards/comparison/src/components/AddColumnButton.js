@@ -38,7 +38,7 @@ export default class AddColumnButton extends Component {
     const noMoreOptions = options.length === 0;
 
     return (
-      <div>
+      <div className="AddColumnButton">
         <SymbolButton
           id="addColumn"
           tooltip={`Add another ${comparableName}.`}

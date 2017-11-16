@@ -49,9 +49,8 @@ export default class ComparisonTableRow extends Component {
     const [lowestValue, ...highestValues] = sortedValues;
     const [highestValue,] = highestValues.reverse();
 
-    // TODO: Set label on all queries
     return (
-      <tr>
+      <tr className="ComparisonTableRow">
         <td>{query.label}</td>
         {columnKeys.map((key, index) =>
           React.createElement(

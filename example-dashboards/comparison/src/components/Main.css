@@ -1,4 +1,4 @@
-.Main-container {
+.Main {
   margin: 1rem auto;
   max-width: 100rem;
 }
@@ -15,7 +15,7 @@
   color: #666;
 }
 
-.Main-container .panel {
+.Main .panel {
   margin-top: 1rem;
   padding: 2.5rem 3rem;
 }
