@@ -13,6 +13,16 @@ export default function UserChart({ loading, data }) {
     xAxis: {
       type: 'datetime',
     },
+    yAxis: {
+      min: 0,
+      allowDecimals: false,
+      title: {
+        text: 'Viewers',
+      },
+    },
+    legend: {
+      enabled: false
+    },
     series: [{
       name: 'Users watching',
       data
