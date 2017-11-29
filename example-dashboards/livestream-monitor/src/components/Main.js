@@ -23,6 +23,18 @@ export default class Main extends Component {
     setInterval(this.tickData, 30 * seconds);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const stateChanged = (attr) => prevState[attr] !== this.state[attr];
+
+    if (stateChanged('currentVideoId')) {
+      this.loadUserCounts();
+    }
+    if (stateChanged('from') || stateChanged('to')) {
+      this.loadUserCounts();
+      this.loadVideos();
+    }
+  }
+
   loadUserCounts = async () => {
     const { queryBuilder, currentVideoId, from, to } = this.state;
     const filters = [['IS_LIVE', 'EQ', true]];
@@ -71,10 +83,7 @@ export default class Main extends Component {
   tickData = () => {
     const now = new Date();
     const fifteenMinutesAgo = new Date(now.getTime() - 15 * minutes);
-    this.setState({ from: fifteenMinutesAgo, to: now }, () => {
-      this.loadUserCounts();
-      this.loadVideos();
-    })
+    this.setState({ from: fifteenMinutesAgo, to: now });
   }
 
   currentLicenseKey = () => {
@@ -97,8 +106,7 @@ export default class Main extends Component {
   handleLicenseChange = (event) => this.setLicenseKey(event.currentTarget.value)
 
   handleVideoIdChange = (event) =>
-    this.setState({ currentVideoId: event.currentTarget.value, loading: true }, () =>
-      this.loadUserCounts());
+    this.setState({ currentVideoId: event.currentTarget.value, loading: true });
 
   render() {
     const { licenses } = this.props;
