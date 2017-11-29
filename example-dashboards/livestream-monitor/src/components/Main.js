@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Bitmovin from 'bitmovin-javascript';
-import { Panel, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import LicenseKeySelect from './LicenseKeySelect.js';
 import UserChart from './UserChart.js';
+import VideoSelect from './VideoSelect.js';
 import './Main.css';
 
 const seconds = 1000;
@@ -99,14 +100,9 @@ export default class Main extends Component {
     this.setState({ currentVideoId: event.currentTarget.value, loading: true }, () =>
       this.loadUserCounts());
 
-  videoIdOptions = () => [
-    { key: '', value: 'All' },
-    ...this.state.videoIds.map(id => ({ key: id, value: id }))
-  ]
-
   render() {
     const { licenses } = this.props;
-    const { userCounts, currentVideoId, loading } = this.state;
+    const { userCounts, currentVideoId, loading, videoIds } = this.state;
     const currentLicenseKey = this.currentLicenseKey();
     const data = userCounts.sort((a, b) => a[0] - b[0])
 
@@ -122,21 +118,12 @@ export default class Main extends Component {
           <form>
             <div className="Main-titleRow">
               <h1>Livestream monitoring</h1>
-              <FormGroup controlId="videoIdSelectGroup">
-                <ControlLabel>Video</ControlLabel>
-                <FormControl
-                  componentClass="select"
-                  placeholder="select"
-                  value={currentVideoId}
-                  onChange={this.handleVideoIdChange}
-                  disabled={loading}
-                >
-                  {this.videoIdOptions().map(({ key, value }) =>
-                    <option value={key} key={key}>
-                      {value}
-                    </option>)}
-                </FormControl>
-              </FormGroup>
+              <VideoSelect
+                currentVideoId={currentVideoId}
+                handleVideoIdChange={this.handleVideoIdChange}
+                videoIds={videoIds}
+                disabled={loading}
+              />
             </div>
             <UserChart loading={loading} data={data} />
           </form>
