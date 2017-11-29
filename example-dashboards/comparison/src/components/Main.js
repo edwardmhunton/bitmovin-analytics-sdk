@@ -16,12 +16,24 @@ export default class Main extends Component {
     queryBuilder: new Bitmovin({ apiKey: this.props.apiKey }).analytics.queries.builder,
   };
 
-  currentLicenseKey = () => localStorage.getItem('licenseKey') || this.props.licenses[0].licenseKey;
+  currentLicenseKey = () => {
+    const currentLicenseKey = localStorage.getItem('licenseKey');
+    const { licenses } = this.props;
+    const { licenseKey } = licenses.find(l => l.licenseKey === currentLicenseKey) || licenses[0];
 
-  handleLicenseChange = (event) => {
-    localStorage.setItem('licenseKey', event.currentTarget.value)
+    if (licenseKey !== currentLicenseKey) {
+      this.setLicenseKey(licenseKey);
+    }
+
+    return licenseKey;
+  }
+
+  setLicenseKey = (licenseKey) => {
+    localStorage.setItem('licenseKey', licenseKey);
     this.forceUpdate();
   }
+
+  handleLicenseChange = (event) => this.setLicenseKey(event.currentTarget.value)
 
   handleDateRangeChange = ({ fromDate, toDate }) =>
     this.setState({ fromDate, toDate });
