@@ -13,6 +13,7 @@ export default class Main extends Component {
   state = {
     queryBuilder: new Bitmovin({ apiKey: this.props.apiKey }).analytics.queries.builder,
     userCounts: [],
+    errorCounts: [],
     videoIds: [],
     currentVideoId: '',
     loading: true,
@@ -28,10 +29,12 @@ export default class Main extends Component {
 
     if (stateChanged('currentVideoId')) {
       this.loadUserCounts();
+      this.loadErrors();
     }
     if (stateChanged('from') || stateChanged('to')) {
       this.loadUserCounts();
       this.loadVideos();
+      this.loadErrors();
     }
   }
 
@@ -78,6 +81,28 @@ export default class Main extends Component {
     const videoIds = rows.map(row => row[0]);
 
     this.setState({ videoIds });
+  }
+
+  loadErrors = async () => {
+    const { queryBuilder, from, to, currentVideoId } = this.state;
+    const filters = [['IS_LIVE', 'EQ', true]];
+
+    const query = queryBuilder.count('IMPRESSION_ID')
+      .licenseKey(this.currentLicenseKey())
+      .between(from, to)
+      .groupBy('ERROR_CODE')
+      .interval('DAY')
+
+    if (currentVideoId) {
+      filters.push(['VIDEO_ID', 'EQ', currentVideoId]);
+    }
+
+    const filteredQuery = filters.reduce((q, params) => q.filter(...params), query)
+
+    const { rows } = await filteredQuery.query();
+    const errorCounts = rows.filter(([timestamp, error, count]) => error !== null)
+
+    this.setState({ errorCounts });
   }
 
   tickData = () => {
@@ -134,6 +159,7 @@ export default class Main extends Component {
               />
             </div>
             <UserChart loading={loading} data={data} />
+            <h2>Errors</h2>
           </form>
         </Panel>
       </div>
