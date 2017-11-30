@@ -1,6 +1,5 @@
 import React from 'react';
-import Highcharts from 'react-highcharts';
-import './UserChart.css';
+import Chart from './Chart.js';
 
 export default function UserChart({ loading, data, from, to}) {
   const config = {
@@ -31,14 +30,5 @@ export default function UserChart({ loading, data, from, to}) {
     }],
   };
 
-  const wrapperClasses = ['UserChart'];
-  if (loading) {
-    wrapperClasses.push('loading');
-  }
-
-  return (
-    <div className={wrapperClasses.join(' ')}>
-      <Highcharts config={config} isPureConfig />
-    </div>
-  );
+  return <Chart config={config} />
 }

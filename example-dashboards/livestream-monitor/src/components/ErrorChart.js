@@ -1,5 +1,5 @@
 import React from 'react';
-import Highcharts from 'react-highcharts';
+import Chart from './Chart.js';
 
 export default function ErrorChart({ loading, data, from, to, onSelectTimestamp }) {
   const seriesArray = [];
@@ -15,7 +15,7 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp 
       seriesArray.push(series);
     }
 
-    series.data = [...series.data, [timestamp, count]]
+    series.data = [...series.data, [timestamp, count]];
   });
 
   const sortedSeriesArray = seriesArray.sort((a, b) => a.name < b.name ? -1 : 1);
@@ -37,7 +37,6 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp 
         stacking: 'normal',
         events: {
           click(event) {
-            console.log('clicked', event.point);
             onSelectTimestamp(event.point.x)
           }
         }
@@ -68,14 +67,5 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp 
     series: coloredSeriesArray,
   };
 
-  const wrapperClasses = ['UserChart'];
-  if (loading) {
-    wrapperClasses.push('loading');
-  }
-
-  return (
-    <div className={wrapperClasses.join(' ')}>
-      <Highcharts config={config} isPureConfig />
-    </div>
-  );
+  return <Chart config={config} />
 }

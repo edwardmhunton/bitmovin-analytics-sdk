@@ -1,0 +1,9 @@
+.Chart {
+  transition: opacity 0.2s ease;
+  height: 400px;
+}
+
+.Chart.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
