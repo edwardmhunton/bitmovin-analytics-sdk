@@ -3,6 +3,7 @@ import Bitmovin from 'bitmovin-javascript';
 import { Panel } from 'react-bootstrap';
 import LicenseKeySelect from './LicenseKeySelect.js';
 import UserAnalytics from './UserAnalytics.js';
+import ErrorAnalytics from './ErrorAnalytics.js';
 import VideoSelect from './VideoSelect.js';
 import './Main.css';
 
@@ -32,12 +33,8 @@ export default class Main extends Component {
   componentDidUpdate(prevProps, prevState) {
     const stateChanged = (attr) => prevState[attr] !== this.state[attr];
 
-    if (stateChanged('currentVideoId')) {
-      this.loadErrors();
-    }
     if (stateChanged('from') || stateChanged('to')) {
       this.loadVideos();
-      this.loadErrors();
     }
   }
 
@@ -53,28 +50,6 @@ export default class Main extends Component {
     const videoIds = rows.map(row => row[0]);
 
     this.setState({ videoIds });
-  }
-
-  loadErrors = async () => {
-    const { queryBuilder, from, to, currentVideoId } = this.state;
-    const filters = [['IS_LIVE', 'EQ', true]];
-
-    const query = queryBuilder.count('IMPRESSION_ID')
-      .licenseKey(this.currentLicenseKey())
-      .between(from, to)
-      .groupBy('ERROR_CODE')
-      .interval('DAY')
-
-    if (currentVideoId) {
-      filters.push(['VIDEO_ID', 'EQ', currentVideoId]);
-    }
-
-    const filteredQuery = filters.reduce((q, params) => q.filter(...params), query)
-
-    const { rows } = await filteredQuery.query();
-    const errorCounts = rows.filter(([timestamp, error, count]) => error !== null)
-
-    this.setState({ errorCounts });
   }
 
   tickData = () => this.setState(currentTimeInterval());
@@ -131,6 +106,13 @@ export default class Main extends Component {
               to={to}
             />
             <h2>Errors</h2>
+            <ErrorAnalytics
+              queryBuilder={queryBuilder}
+              licenseKey={currentLicenseKey}
+              currentVideoId={currentVideoId}
+              from={from}
+              to={to}
+            />
           </form>
         </Panel>
       </div>
