@@ -4,7 +4,10 @@ export default class VideoStats extends PureComponent {
   state = {
     data: [],
     loading: true,
+    selectedTimestamp: null,
   }
+
+  handleTimestampSelect = (selectedTimestamp) => this.setState({ selectedTimestamp });
 
   componentDidMount() {
     this.loadData(this.props);
@@ -47,8 +50,18 @@ export default class VideoStats extends PureComponent {
   }
 
   render() {
-    const { data, loading } = this.state;
-    const { from, to } = this.props;
-    return React.cloneElement(this.props.children, { loading, data, from, to })
+    const { data, loading, selectedTimestamp } = this.state;
+    const { from, to, children } = this.props;
+
+    return React.Children.map(children, child =>
+      React.cloneElement(child, {
+        loading,
+        data,
+        from,
+        to,
+        selectedTimestamp,
+        onSelectTimestamp: this.handleTimestampSelect,
+      })
+    );
   }
 }

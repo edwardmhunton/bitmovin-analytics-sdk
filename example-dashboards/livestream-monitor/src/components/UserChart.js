@@ -38,7 +38,7 @@ export default function UserChart({ loading, data, from, to}) {
 
   return (
     <div className={wrapperClasses.join(' ')}>
-      <Highcharts config={config} />
+      <Highcharts config={config} isPureConfig />
     </div>
   );
 }

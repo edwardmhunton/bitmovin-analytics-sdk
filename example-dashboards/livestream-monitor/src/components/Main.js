@@ -6,15 +6,19 @@ import VideoSelect from './VideoSelect.js';
 import VideoStats from './VideoStats.js';
 import UserChart from './UserChart.js';
 import ErrorChart from './ErrorChart.js';
+import ErrorTable from './ErrorTable.js';
 import './Main.css';
 
 const seconds = 1000;
 const minutes = 60 * seconds;
 
-const currentTimeInterval = () => ({
-  from: new Date(new Date().getTime() - 15 * minutes),
-  to: new Date(),
-});
+const currentTimeInterval = () => {
+  const to = new Date();
+  to.setSeconds(0);
+  to.setMilliseconds(0);
+
+  return { from: new Date(to.getTime() - 15 * minutes), to }
+};
 
 export default class Main extends Component {
   state = {
@@ -120,6 +124,7 @@ export default class Main extends Component {
               dataProcessor={(data) => data.filter(([timestamp, error, count]) => error !== null)}
             >
               <ErrorChart />
+              <ErrorTable />
             </VideoStats>
           </form>
         </Panel>

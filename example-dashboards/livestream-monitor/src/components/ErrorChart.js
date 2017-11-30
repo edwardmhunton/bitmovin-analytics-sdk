@@ -1,7 +1,7 @@
 import React from 'react';
 import Highcharts from 'react-highcharts';
 
-export default function ErrorChart({ loading, data, from, to }) {
+export default function ErrorChart({ loading, data, from, to, onSelectTimestamp }) {
   const seriesArray = [];
 
   data.forEach(([timestamp, errorCode, count]) => {
@@ -18,9 +18,11 @@ export default function ErrorChart({ loading, data, from, to }) {
     series.data = [...series.data, [timestamp, count]]
   });
 
-  const coloredSeriesArray = seriesArray.map((series, index) => {
-    const lightness = (75 - 25 * (index / seriesArray.length));
-    return { ...series, color: `hsl(3, 85%, ${lightness}%)` }
+  const sortedSeriesArray = seriesArray.sort((a, b) => a.name < b.name ? -1 : 1);
+
+  const coloredSeriesArray = sortedSeriesArray.map((series, index) => {
+    const lightness = (75 - 35 * (index / seriesArray.length));
+    return { ...series, color: `hsl(3, 82%, ${lightness}%)` }
   })
 
   const config = {
@@ -33,9 +35,11 @@ export default function ErrorChart({ loading, data, from, to }) {
     plotOptions: {
       column: {
         stacking: 'normal',
-        dataLabels: {
-          enabled: true,
-          color: 'white',
+        events: {
+          click(event) {
+            console.log('clicked', event.point);
+            onSelectTimestamp(event.point.x)
+          }
         }
       }
     },
@@ -48,8 +52,15 @@ export default function ErrorChart({ loading, data, from, to }) {
       min: 0,
       allowDecimals: false,
       title: {
-        text: 'Viewers',
+        text: 'Impressions with errors',
       },
+      stackLabels: {
+        enabled: true,
+        style: {
+          fontWeight: 'bold',
+          color: 'gray',
+        }
+      }
     },
     legend: {
       enabled: false
@@ -64,7 +75,7 @@ export default function ErrorChart({ loading, data, from, to }) {
 
   return (
     <div className={wrapperClasses.join(' ')}>
-      <Highcharts config={config} />
+      <Highcharts config={config} isPureConfig />
     </div>
   );
 }
