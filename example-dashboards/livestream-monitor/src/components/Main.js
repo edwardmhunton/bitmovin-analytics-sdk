@@ -74,7 +74,7 @@ export default class Main extends Component {
   handleLicenseChange = (event) => this.setLicenseKey(event.currentTarget.value)
 
   handleVideoIdChange = (event) =>
-    this.setState({ currentVideoId: event.currentTarget.value, loading: true });
+    this.setState({ currentVideoId: event.currentTarget.value });
 
   render() {
     const { licenses } = this.props;
@@ -101,7 +101,7 @@ export default class Main extends Component {
             <UserAnalytics
               queryBuilder={queryBuilder}
               licenseKey={currentLicenseKey}
-              currentVideoId={currentVideoId}
+              videoId={currentVideoId}
               from={from}
               to={to}
             />

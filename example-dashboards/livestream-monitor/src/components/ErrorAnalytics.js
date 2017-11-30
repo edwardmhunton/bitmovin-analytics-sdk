@@ -14,7 +14,10 @@ export default class ErrorAnalytics extends PureComponent {
     this.loadErrorCounts(this.props);
   }
 
-  componentDidUpdate(newProps) {
+  componentWillReceiveProps(newProps) {
+    if (this.props.videoId !== newProps.videoId) {
+      this.setState({ loading: true });
+    }
     if (newProps !== this.props) {
       this.loadErrorCounts(newProps);
     }

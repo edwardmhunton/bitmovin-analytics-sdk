@@ -14,13 +14,16 @@ export default class UserAnalytics extends PureComponent {
     this.loadUserCounts(this.props);
   }
 
-  componentDidUpdate(newProps) {
+  componentWillReceiveProps(newProps) {
+    if (this.props.videoId !== newProps.videoId) {
+      this.setState({ loading: true });
+    }
     if (newProps !== this.props) {
       this.loadUserCounts(newProps);
     }
   }
 
-  loadUserCounts = async ({ queryBuilder, currentVideoId, from, to, licenseKey }) => {
+  loadUserCounts = async ({ queryBuilder, videoId, from, to, licenseKey }) => {
     const filters = [['IS_LIVE', 'EQ', true]];
 
     const query = queryBuilder.count('USER_ID')
@@ -28,14 +31,15 @@ export default class UserAnalytics extends PureComponent {
       .between(from, to)
       .interval('MINUTE')
 
-    if (currentVideoId) {
-      filters.push(['VIDEO_ID', 'EQ', currentVideoId]);
+    if (videoId) {
+      filters.push(['VIDEO_ID', 'EQ', videoId]);
     }
 
     const filteredQuery = filters.reduce((q, params) => q.filter(...params), query)
 
     const { rows } = await filteredQuery.query();
     const userCounts = rows.sort((a, b) => a[0] - b[0]);
+    console.log(filters, rows);
 
     this.setState({ userCounts, loading: false });
   }
