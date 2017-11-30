@@ -1,10 +1,10 @@
 import React from 'react';
 import Highcharts from 'react-highcharts';
 
-export default function ErrorChart({ loading, errorCounts, from, to }) {
+export default function ErrorChart({ loading, data, from, to }) {
   const seriesArray = [];
 
-  errorCounts.forEach(([timestamp, errorCode, count]) => {
+  data.forEach(([timestamp, errorCode, count]) => {
     const errorCodeString = `${errorCode}`;
     let series = seriesArray.find(({ name }) => name === errorCodeString);
     if (!series) {

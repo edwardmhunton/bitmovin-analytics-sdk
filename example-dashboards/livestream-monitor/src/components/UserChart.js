@@ -2,7 +2,7 @@ import React from 'react';
 import Highcharts from 'react-highcharts';
 import './UserChart.css';
 
-export default function UserChart({ loading, userCounts: data, from, to}) {
+export default function UserChart({ loading, data, from, to}) {
   const config = {
     chart: {
       type: 'column',

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Bitmovin from 'bitmovin-javascript';
 import { Panel } from 'react-bootstrap';
 import LicenseKeySelect from './LicenseKeySelect.js';
-import UserAnalytics from './UserAnalytics.js';
-import ErrorAnalytics from './ErrorAnalytics.js';
 import VideoSelect from './VideoSelect.js';
+import VideoStats from './VideoStats.js';
+import UserChart from './UserChart.js';
+import ErrorChart from './ErrorChart.js';
 import './Main.css';
 
 const seconds = 1000;
@@ -98,21 +99,28 @@ export default class Main extends Component {
                 videoIds={videoIds}
               />
             </div>
-            <UserAnalytics
+            <VideoStats
               queryBuilder={queryBuilder}
               licenseKey={currentLicenseKey}
               videoId={currentVideoId}
               from={from}
               to={to}
-            />
-            <h2>Errors</h2>
-            <ErrorAnalytics
+              count="USER_ID"
+            >
+              <UserChart />
+            </VideoStats>
+            <VideoStats
               queryBuilder={queryBuilder}
               licenseKey={currentLicenseKey}
-              currentVideoId={currentVideoId}
+              videoId={currentVideoId}
               from={from}
               to={to}
-            />
+              count="IMPRESSION_ID"
+              queryExtension={(query) => query.groupBy('ERROR_CODE')}
+              dataProcessor={(data) => data.filter(([timestamp, error, count]) => error !== null)}
+            >
+              <ErrorChart />
+            </VideoStats>
           </form>
         </Panel>
       </div>
