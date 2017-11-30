@@ -35,26 +35,14 @@ export default class UserAnalytics extends PureComponent {
     const filteredQuery = filters.reduce((q, params) => q.filter(...params), query)
 
     const { rows } = await filteredQuery.query();
-    console.log(rows);
-
-    // fill minutes without users
-    const lastMinute = new Date(to.getTime())
-    lastMinute.setSeconds(0);
-    lastMinute.setMilliseconds(0);
-    const minutesArray = new Array(15)
-      .fill(lastMinute)
-      .map((minute, index) => minute.getTime() - index * minutes);
-
-    const userCounts = minutesArray
-      .map(minute => rows.find((row) => row[0] === minute) || [minute, 0]);
+    const userCounts = rows.sort((a, b) => a[0] - b[0]);
 
     this.setState({ userCounts, loading: false });
   }
 
   render() {
     const { userCounts, loading } = this.state;
-    const data = userCounts.sort((a, b) => a[0] - b[0]);
-
-    return <UserChart loading={loading} data={data} />;
+    const { from, to } = this.props;
+    return <UserChart loading={loading} userCounts={userCounts} from={from} to={to} />;
   }
 }

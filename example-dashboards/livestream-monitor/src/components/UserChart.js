@@ -2,7 +2,7 @@ import React from 'react';
 import Highcharts from 'react-highcharts';
 import './UserChart.css';
 
-export default function UserChart({ loading, data }) {
+export default function UserChart({ loading, userCounts: data, from, to}) {
   const config = {
     chart: {
       type: 'column',
@@ -12,6 +12,8 @@ export default function UserChart({ loading, data }) {
     },
     xAxis: {
       type: 'datetime',
+      min: from.getTime(),
+      max: to.getTime(),
     },
     yAxis: {
       min: 0,
