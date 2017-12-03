@@ -25,36 +25,12 @@ export default class Main extends Component {
     queryBuilder: new Bitmovin({ apiKey: this.props.apiKey }).analytics.queries.builder,
     userCounts: [],
     errorCounts: [],
-    videoIds: [],
     currentVideoId: '',
     ...currentTimeInterval(),
   };
 
   componentDidMount() {
-    this.tickData();
     setInterval(this.tickData, 30 * seconds);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const stateChanged = (attr) => prevState[attr] !== this.state[attr];
-
-    if (stateChanged('from') || stateChanged('to')) {
-      this.loadVideos();
-    }
-  }
-
-  loadVideos = async () => {
-    const { queryBuilder, from, to } = this.state;
-    const { rows } = await queryBuilder.count('USER_ID')
-      .licenseKey(this.currentLicenseKey())
-      .between(from, to)
-      .filter('IS_LIVE', 'EQ', true)
-      .groupBy('VIDEO_ID')
-      .query();
-
-    const videoIds = rows.map(row => row[0]);
-
-    this.setState({ videoIds });
   }
 
   tickData = () => this.setState(currentTimeInterval());
@@ -98,9 +74,13 @@ export default class Main extends Component {
             <div className="Main-titleRow">
               <h1>Livestream monitoring</h1>
               <VideoSelect
+                queryBuilder={queryBuilder}
+                licenseKey={currentLicenseKey}
                 currentVideoId={currentVideoId}
                 handleVideoIdChange={this.handleVideoIdChange}
                 videoIds={videoIds}
+                from={from}
+                to={to}
               />
             </div>
             <VideoStats
