@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 
+const apiLimit = 150;
+
 export default class VideoStats extends PureComponent {
   state = {
     data: [],
@@ -29,6 +31,8 @@ export default class VideoStats extends PureComponent {
       .licenseKey(licenseKey)
       .between(from, to)
       .interval('MINUTE')
+      .orderBy('FUNCTION', 'DESC')
+      .orderBy('MINUTE', 'DESC')
 
     if (queryExtension) {
       query = queryExtension(query);
@@ -40,10 +44,16 @@ export default class VideoStats extends PureComponent {
 
     const filteredQuery = filters.reduce((q, params) => q.filter(...params), query)
 
-    let { rows } = await filteredQuery.query();
-    if (dataProcessor) {
-      rows = dataProcessor(rows);
-    }
+    const fetchRows = async (offset = 0) => {
+      const { rows } = await filteredQuery
+        .limit(apiLimit)
+        .offset(offset)
+        .query();
+
+      return rows.length === apiLimit ? [...rows, ...await fetchRows(offset + apiLimit)] : rows;
+    };
+
+    const rows = await fetchRows();
     const data = rows.sort((a, b) => a[0] - b[0]);
 
     this.setState({ data, loading: false });
