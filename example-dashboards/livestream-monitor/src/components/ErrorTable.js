@@ -1,10 +1,8 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import './ErrorTable.css';
 
-export default function ErrorTable(props) {
-  console.log(props);
-  const { selectedTimestamp, data } = props;
-
+export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSelectSeriesName, data }) {
   if (!selectedTimestamp) {
     return '';
   }
@@ -16,10 +14,10 @@ export default function ErrorTable(props) {
 
   const errorRows = data
     .filter(([timestamp,]) => timestamp === selectedTimestamp)
-    .sort((a, b) =>  b[2] - a[2]); // desc by occurrence
+    .sort((a, b) =>  b[2] - a[2] || a[1] - b[1]); // desc by occurrence, then acs by error code
 
   return (
-    <div>
+    <div className="ErrorTable">
       <h2>Errors at {formattedTime}</h2>
       <Table striped bordered condensed hover>
         <thead>
@@ -31,7 +29,11 @@ export default function ErrorTable(props) {
         </thead>
         <tbody>
           {errorRows.map(([, errorCode, occurrences]) =>
-            <tr key={errorCode}>
+            <tr
+              key={errorCode}
+              className={`${errorCode}` === selectedSeriesName ? 'highlighted' : null}
+              onClick={() => onSelectSeriesName(`${errorCode}`)}
+            >
               <td>{errorCode}</td>
               <td>TODO</td>
               <td>{occurrences}</td>

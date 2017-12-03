@@ -1,0 +1,8 @@
+.ErrorTable tr {
+  cursor: pointer;
+}
+
+.ErrorTable > table > tbody > tr.highlighted {
+  background: #444;
+  color: white;
+}

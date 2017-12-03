@@ -7,9 +7,12 @@ export default class VideoStats extends PureComponent {
     data: [],
     loading: true,
     selectedTimestamp: null,
+    selectedSeriesName: null,
   }
 
   handleTimestampSelect = (selectedTimestamp) => this.setState({ selectedTimestamp });
+
+  handleSeriesNameSelect = (selectedSeriesName) => this.setState({ selectedSeriesName });
 
   componentDidMount() {
     this.loadData(this.props);
@@ -60,7 +63,7 @@ export default class VideoStats extends PureComponent {
   }
 
   render() {
-    const { data, loading, selectedTimestamp } = this.state;
+    const { data, loading, selectedTimestamp, selectedSeriesName } = this.state;
     const { from, to, children } = this.props;
 
     return React.Children.map(children, child =>
@@ -70,7 +73,9 @@ export default class VideoStats extends PureComponent {
         from,
         to,
         selectedTimestamp,
+        selectedSeriesName,
         onSelectTimestamp: this.handleTimestampSelect,
+        onSelectSeriesName: this.handleSeriesNameSelect,
       })
     );
   }
