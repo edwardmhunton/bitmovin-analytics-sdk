@@ -3,6 +3,14 @@
 }
 
 .ErrorTable > table > tbody > tr.highlighted {
-  background: #444;
+  background: #666;
   color: white;
+}
+
+.ErrorTable h2 {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 200;
+  color: #999;
+  margin-top: 0;
 }

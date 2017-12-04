@@ -13,7 +13,7 @@ export default function Chart({ loading, config, title }) {
   return (
     <div className={wrapperClasses.join(' ')}>
       <h2>{title}</h2>
-      <div class="highchartsContainer">
+      <div className="highchartsContainer">
         <Highcharts config={config} isPureConfig />
       </div>
     </div>

@@ -1,7 +1,8 @@
 import React from 'react';
 import Chart from './Chart.js';
+import './ErrorChart.css';
 
-export default function ErrorChart({ loading, data, from, to, onSelectTimestamp, onSelectSeriesName, selectedSeriesName }) {
+export default function ErrorChart({ loading, data, from, to, onSelectTimestamp, onSelectSeriesName, selectedSeriesName, selectedTimestamp }) {
   const seriesArray = [];
 
   data.forEach(([timestamp, errorCode, count]) => {
@@ -10,12 +11,12 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
     if (!series) {
       series = {
         name: errorCodeString,
-        data: []
+        data: [],
       };
       seriesArray.push(series);
     }
 
-    series.data = [...series.data, [timestamp, count]];
+    series.data = [...series.data, { x: timestamp, y: count }];
   });
 
   const sortedSeriesArray = seriesArray.sort((a, b) => a.name < b.name ? -1 : 1);
@@ -27,6 +28,15 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
     const lightness = (75 - 35 * (index / seriesArray.length));
     return { ...series, color: `hsl(3, 82%, ${lightness}%)`, cursor: 'pointer' };
   })
+
+  // highlighted column
+  if (selectedTimestamp) {
+    seriesArray.forEach(series => {
+      series.data
+        .filter(({ x }) => x !== selectedTimestamp)
+        .forEach(item => item.className = 'deselected')
+    })
+  }
 
   const config = {
     chart: {
