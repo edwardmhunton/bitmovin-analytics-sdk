@@ -4,7 +4,7 @@ import './Chart.css';
 
 Highcharts.Highcharts.setOptions({ global: { useUTC: false } });
 
-export default function Chart({ loading, config }) {
+export default function Chart({ loading, config, title }) {
   const wrapperClasses = ['Chart'];
   if (loading) {
     wrapperClasses.push('loading');
@@ -12,7 +12,10 @@ export default function Chart({ loading, config }) {
 
   return (
     <div className={wrapperClasses.join(' ')}>
-      <Highcharts config={config} isPureConfig />
+      <h2>{title}</h2>
+      <div class="highchartsContainer">
+        <Highcharts config={config} isPureConfig />
+      </div>
     </div>
   );
 }

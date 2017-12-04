@@ -5,9 +5,10 @@ export default function UserChart({ loading, data, from, to}) {
   const config = {
     chart: {
       type: 'column',
+      height: '30%',
     },
     title: {
-      text: 'Audience',
+      text: null,
     },
     xAxis: {
       type: 'datetime',
@@ -30,5 +31,5 @@ export default function UserChart({ loading, data, from, to}) {
     }],
   };
 
-  return <Chart config={config} />
+  return <Chart config={config} title="Audience" />
 }

@@ -31,9 +31,10 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
   const config = {
     chart: {
       type: 'column',
+      height: '30%',
     },
     title: {
-      text: 'Errors',
+      text: null,
     },
     plotOptions: {
       column: {
@@ -51,6 +52,11 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
             color: 'black',
           }
         }
+      },
+      series: {
+        animation: {
+          duration: 2000,
+        }
       }
     },
     xAxis: {
@@ -67,8 +73,7 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
       stackLabels: {
         enabled: true,
         style: {
-          fontWeight: 'bold',
-          color: 'gray',
+          color: '#AAA',
         }
       }
     },
@@ -78,5 +83,5 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
     series: coloredSeriesArray,
   };
 
-  return <Chart config={config} />
+  return <Chart config={config} title="Errors" />
 }
