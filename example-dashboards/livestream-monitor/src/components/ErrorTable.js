@@ -19,7 +19,7 @@ export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSe
   return (
     <div className="ErrorTable">
       <h2>Errors at {formattedTime}</h2>
-      <Table striped bordered condensed hover>
+      <Table striped condensed hover>
         <thead>
           <tr>
             <th>Code</th>
