@@ -1,6 +1,10 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import errors from '../errors.js';
 import './ErrorTable.css';
+
+const errorMapping = errors
+  .reduce((errorMap, { errorCode, errorMessage }) => ({ ...errorMap, [errorCode]: errorMessage }));
 
 export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSelectSeriesName, data }) {
   if (!selectedTimestamp) {
@@ -35,7 +39,7 @@ export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSe
               onClick={() => onSelectSeriesName(`${errorCode}`)}
             >
               <td>{errorCode}</td>
-              <td>TODO</td>
+              <td>{errorMapping[errorCode]}</td>
               <td>{occurrences}</td>
             </tr>
           )}
