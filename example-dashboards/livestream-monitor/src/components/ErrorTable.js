@@ -7,7 +7,8 @@ import './ErrorTable.css';
 const errorMapping = errors
   .reduce((errorMap, { errorCode, errorMessage }) => ({ ...errorMap, [errorCode]: errorMessage }));
 
-export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSelectSeriesName, onSelectTimestamp, data, from, to }) {
+export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSelectSeriesName,
+  onSelectTimestamp, data, from, to, loading }) {
   if (!selectedTimestamp) {
     return '';
   }
@@ -24,8 +25,13 @@ export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSe
     // After sorting, these duplicates are subsequent
     .filter((row, index, array) => index === 0 || array[index - 1][1] !== row[1]);
 
+  const wrapperClasses = ['ErrorTable'];
+  if (loading) {
+    wrapperClasses.push('loading');
+  }
+
   return (
-    <div className="ErrorTable">
+    <div className={wrapperClasses.join(' ')}>
       <h2>
         <button
           type="button"

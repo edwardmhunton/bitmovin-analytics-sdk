@@ -1,3 +1,7 @@
+.ErrorTable {
+  transition: opacity 0.2s ease;
+}
+
 .ErrorTable tr {
   cursor: pointer;
 }
@@ -23,4 +27,9 @@
 
 .ErrorTable h2 button:disabled {
   opacity: 0.3;
+}
+
+.ErrorTable.loading {
+  opacity: 0.4;
+  pointer-events: none;
 }
