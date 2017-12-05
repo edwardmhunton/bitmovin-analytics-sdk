@@ -83,19 +83,21 @@ export default class Main extends Component {
           <form>
             <div className="Main-titleRow">
               <h1>Livestream monitoring</h1>
-              <PeriodSelect
-                currentPeriod={currentPeriod}
-                handlePeriodChange={this.handlePeriodChange}
-              />
-              <VideoSelect
-                queryBuilder={queryBuilder}
-                licenseKey={currentLicenseKey}
-                currentVideoId={currentVideoId}
-                handleVideoIdChange={this.handleVideoIdChange}
-                videoIds={videoIds}
-                from={from}
-                to={to}
-              />
+              <div className="Main-selects">
+                <PeriodSelect
+                  currentPeriod={currentPeriod}
+                  handlePeriodChange={this.handlePeriodChange}
+                />
+                <VideoSelect
+                  queryBuilder={queryBuilder}
+                  licenseKey={currentLicenseKey}
+                  currentVideoId={currentVideoId}
+                  handleVideoIdChange={this.handleVideoIdChange}
+                  videoIds={videoIds}
+                  from={from}
+                  to={to}
+                />
+              </div>
             </div>
             <VideoStats
               queryBuilder={queryBuilder}

@@ -19,3 +19,18 @@
   margin-top: 1rem;
   padding: 2.5rem 3rem;
 }
+
+.Main-selects {
+  display: flex;
+  margin-top: 0.96rem;
+}
+
+.Main-selects .form-group {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+}
+
+.Main-selects label {
+  margin: 0 1rem;
+}
