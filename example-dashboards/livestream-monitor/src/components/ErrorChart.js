@@ -40,13 +40,6 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
   }
 
   const config = {
-    chart: {
-      type: 'column',
-      height: '30%',
-    },
-    title: {
-      text: null,
-    },
     plotOptions: {
       column: {
         stacking: 'normal',
@@ -64,16 +57,6 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
           }
         }
       },
-      series: {
-        animation: {
-          duration: 2 * seconds,
-        }
-      }
-    },
-    xAxis: {
-      type: 'datetime',
-      min: from.getTime(),
-      max: to.getTime(),
     },
     yAxis: {
       min: 0,
@@ -88,11 +71,8 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
         }
       }
     },
-    legend: {
-      enabled: false
-    },
     series: highlightedSeries,
   };
 
-  return <Chart config={config} title="Errors" loading={loading} />
+  return <Chart config={config} title="Errors" loading={loading} from={from} to={to} />
 }
