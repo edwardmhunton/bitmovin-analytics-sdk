@@ -1,5 +1,5 @@
 module.exports = [
-  { errorCode: 1016, errorMessage: "<strong>License Error</strong></br> Could not find license." },
+  { errorCode: 1016, errorMessage: "License Error: Could not find license." },
   { errorCode: 3000, errorMessage: "Unknown error" },
   { errorCode: 3001, errorMessage: "Unsupported manifest format" },
   { errorCode: 3002, errorMessage: "Segment contains no data" },
