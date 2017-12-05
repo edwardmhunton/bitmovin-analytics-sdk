@@ -7,16 +7,19 @@ import VideoStats from './VideoStats.js';
 import UserChart from './UserChart.js';
 import ErrorChart from './ErrorChart.js';
 import ErrorTable from './ErrorTable.js';
+import PeriodSelect from './PeriodSelect.js';
 import calcDate, { minutes, seconds } from '../calcDate.js';
 import './Main.css';
 
-const currentTimeInterval = () => {
+const currentTimeInterval = (period) => {
   const to = new Date();
   to.setSeconds(0);
   to.setMilliseconds(0);
 
-  return { from: calcDate(to, - 15 * minutes), to }
+  return { from: calcDate(to, - period), to }
 };
+
+const defaultPeriod = 15 * minutes;
 
 export default class Main extends Component {
   state = {
@@ -24,14 +27,21 @@ export default class Main extends Component {
     userCounts: [],
     errorCounts: [],
     currentVideoId: '',
-    ...currentTimeInterval(),
+    currentPeriod: defaultPeriod,
+    ...currentTimeInterval(defaultPeriod),
   };
 
   componentDidMount() {
     setInterval(this.tickData, 30 * seconds);
   }
 
-  tickData = () => this.setState(currentTimeInterval());
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentPeriod !== this.state.currentPeriod) {
+      this.tickData();
+    }
+  }
+
+  tickData = () => this.setState(currentTimeInterval(this.state.currentPeriod));
 
   currentLicenseKey = () => {
     const currentLicenseKey = localStorage.getItem('licenseKey');
@@ -55,9 +65,11 @@ export default class Main extends Component {
   handleVideoIdChange = (event) =>
     this.setState({ currentVideoId: event.currentTarget.value });
 
+  handlePeriodChange = (event) => this.setState({ currentPeriod: event.currentTarget.value });
+
   render() {
     const { licenses } = this.props;
-    const { queryBuilder, currentVideoId, videoIds, from, to } = this.state;
+    const { queryBuilder, currentVideoId, currentPeriod, videoIds, from, to } = this.state;
     const currentLicenseKey = this.currentLicenseKey();
 
     return (
@@ -71,6 +83,10 @@ export default class Main extends Component {
           <form>
             <div className="Main-titleRow">
               <h1>Livestream monitoring</h1>
+              <PeriodSelect
+                currentPeriod={currentPeriod}
+                handlePeriodChange={this.handlePeriodChange}
+              />
               <VideoSelect
                 queryBuilder={queryBuilder}
                 licenseKey={currentLicenseKey}
