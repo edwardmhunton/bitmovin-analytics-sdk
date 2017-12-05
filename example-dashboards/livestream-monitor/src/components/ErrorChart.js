@@ -22,19 +22,19 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
   const sortedSeriesArray = seriesArray.sort((a, b) => a.name < b.name ? -1 : 1);
 
   const coloredSeriesArray = sortedSeriesArray.map((series, index) => {
-    if (series.name === selectedSeriesName) {
-      return { ...series, color: '#444' };
-    }
     const lightness = (75 - 35 * (index / seriesArray.length));
     return { ...series, color: `hsl(3, 82%, ${lightness}%)`, cursor: 'pointer' };
   })
+
+  const highlightedSeries = coloredSeriesArray.map((series, index) =>
+    series.name === selectedSeriesName ? { ...series, className: 'selectedSeries' } : series);
 
   // highlighted column
   if (selectedTimestamp) {
     seriesArray.forEach(series => {
       series.data
         .filter(({ x }) => x !== selectedTimestamp)
-        .forEach(item => item.className = 'deselected')
+        .forEach(item => item.className = 'deselectedColumn')
     })
   }
 
@@ -90,7 +90,7 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
     legend: {
       enabled: false
     },
-    series: coloredSeriesArray,
+    series: highlightedSeries,
   };
 
   return <Chart config={config} title="Errors" />
