@@ -8,7 +8,7 @@ Highcharts.Highcharts.setOptions({ global: { useUTC: false } });
 const defaultConfig = Object.freeze({
   chart: {
     type: 'column',
-    height: '30%',
+    height: '23%',
   },
   title: {
     text: null,
