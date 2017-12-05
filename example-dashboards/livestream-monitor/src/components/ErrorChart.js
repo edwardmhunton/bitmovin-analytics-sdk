@@ -93,5 +93,5 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
     series: highlightedSeries,
   };
 
-  return <Chart config={config} title="Errors" />
+  return <Chart config={config} title="Errors" loading={loading} />
 }

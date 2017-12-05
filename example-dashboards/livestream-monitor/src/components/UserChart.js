@@ -31,5 +31,5 @@ export default function UserChart({ loading, data, from, to}) {
     }],
   };
 
-  return <Chart config={config} title="Audience" />
+  return <Chart config={config} title="Audience" loading={loading} />
 }
