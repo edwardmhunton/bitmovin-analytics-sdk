@@ -6,7 +6,7 @@ import './ErrorTable.css';
 const errorMapping = errors
   .reduce((errorMap, { errorCode, errorMessage }) => ({ ...errorMap, [errorCode]: errorMessage }));
 
-export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSelectSeriesName, data }) {
+export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSelectSeriesName, onSelectTimestamp, data, from, to }) {
   if (!selectedTimestamp) {
     return '';
   }
@@ -18,11 +18,30 @@ export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSe
 
   const errorRows = data
     .filter(([timestamp,]) => timestamp === selectedTimestamp)
-    .sort((a, b) =>  b[2] - a[2] || a[1] - b[1]); // desc by occurrence, then acs by error code
+    .sort((a, b) =>  b[2] - a[2] || a[1] - b[1]) // desc by occurrence, then acs by error code
+    // Since we query multiple times, it's possible that the rows contain duplicates.
+    // After sorting, these duplicates are subsequent
+    .filter((row, index, array) => index === 0 || array[index - 1][1] !== row[1]);
 
   return (
     <div className="ErrorTable">
-      <h2>Errors at {formattedTime}</h2>
+      <h2>
+        <button
+          type="button"
+          onClick={() => onSelectTimestamp(selectedTimestamp - 60 * 1000)}
+          disabled={selectedTimestamp <= from}
+        >
+          ＜
+        </button>
+        Errors at {formattedTime}
+        <button
+          type="button"
+          onClick={() => onSelectTimestamp(selectedTimestamp + 60 * 1000)}
+          disabled={selectedTimestamp + 60 * 1000 >= to}
+        >
+          ＞
+        </button>
+      </h2>
       <Table striped condensed hover>
         <thead>
           <tr>

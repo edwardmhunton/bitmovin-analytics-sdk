@@ -14,3 +14,13 @@
   color: #999;
   margin-top: 0;
 }
+
+.ErrorTable h2 button {
+  border: none;
+  background: none;
+  margin: 0 0.5em;
+}
+
+.ErrorTable h2 button:disabled {
+  opacity: 0.3;
+}
