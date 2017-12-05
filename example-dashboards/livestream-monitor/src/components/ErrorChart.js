@@ -1,5 +1,6 @@
 import React from 'react';
 import Chart from './Chart.js';
+import calcDate, { minutes, seconds } from '../calcDate.js';
 import './ErrorChart.css';
 
 export default function ErrorChart({ loading, data, from, to, onSelectTimestamp, onSelectSeriesName, selectedSeriesName, selectedTimestamp }) {
@@ -65,7 +66,7 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
       },
       series: {
         animation: {
-          duration: 2000,
+          duration: 2 * seconds,
         }
       }
     },

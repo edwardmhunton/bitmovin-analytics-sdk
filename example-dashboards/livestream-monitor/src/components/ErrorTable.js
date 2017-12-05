@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import errors from '../errors.js';
+import { minutes } from '../calcDate';
 import './ErrorTable.css';
 
 const errorMapping = errors
@@ -28,7 +29,7 @@ export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSe
       <h2>
         <button
           type="button"
-          onClick={() => onSelectTimestamp(selectedTimestamp - 60 * 1000)}
+          onClick={() => onSelectTimestamp(selectedTimestamp - 1 * minutes)}
           disabled={selectedTimestamp <= from}
         >
           ＜
@@ -36,8 +37,8 @@ export default function ErrorTable({ selectedTimestamp, selectedSeriesName, onSe
         Errors at {formattedTime}
         <button
           type="button"
-          onClick={() => onSelectTimestamp(selectedTimestamp + 60 * 1000)}
-          disabled={selectedTimestamp + 60 * 1000 >= to}
+          onClick={() => onSelectTimestamp(selectedTimestamp + 1 * minutes)}
+          disabled={selectedTimestamp + 1 * minutes >= to}
         >
           ＞
         </button>

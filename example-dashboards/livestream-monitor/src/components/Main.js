@@ -7,17 +7,15 @@ import VideoStats from './VideoStats.js';
 import UserChart from './UserChart.js';
 import ErrorChart from './ErrorChart.js';
 import ErrorTable from './ErrorTable.js';
+import calcDate, { minutes, seconds } from '../calcDate.js';
 import './Main.css';
-
-const seconds = 1000;
-const minutes = 60 * seconds;
 
 const currentTimeInterval = () => {
   const to = new Date();
   to.setSeconds(0);
   to.setMilliseconds(0);
 
-  return { from: new Date(to.getTime() - 15 * minutes), to }
+  return { from: calcDate(to, - 15 * minutes), to }
 };
 
 export default class Main extends Component {
