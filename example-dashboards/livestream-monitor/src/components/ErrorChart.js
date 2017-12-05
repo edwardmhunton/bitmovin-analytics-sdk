@@ -6,6 +6,9 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
   const seriesArray = [];
 
   data.forEach(([timestamp, errorCode, count]) => {
+    if (errorCode === null) {
+      return;
+    }
     const errorCodeString = `${errorCode}`;
     let series = seriesArray.find(({ name }) => name === errorCodeString);
     if (!series) {
