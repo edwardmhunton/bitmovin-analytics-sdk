@@ -24,6 +24,12 @@ export default class VideoStats extends PureComponent {
     }
     if (newProps !== this.props) {
       this.loadData(newProps);
+
+      const { from } = newProps;
+      const { selectedTimestamp } = this.state;
+      if (selectedTimestamp && from > selectedTimestamp) {
+        this.setState({ selectedTimestamp: from.getTime() });
+      }
     }
   }
 
