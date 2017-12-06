@@ -6,6 +6,7 @@ import VideoSelect from './VideoSelect.js';
 import VideoStats from './VideoStats.js';
 import UserChart from './UserChart.js';
 import ErrorChart from './ErrorChart.js';
+import BufferingChart from './BufferingChart.js';
 import ErrorTable from './ErrorTable.js';
 import PeriodSelect from './PeriodSelect.js';
 import calcDate, { minutes, seconds } from '../calcDate.js';
@@ -108,6 +109,17 @@ export default class Main extends Component {
               count="USER_ID"
             >
               <UserChart />
+            </VideoStats>
+            <VideoStats
+              queryBuilder={queryBuilder}
+              licenseKey={currentLicenseKey}
+              videoId={currentVideoId}
+              from={from}
+              to={to}
+              count="USER_ID"
+              queryExtension={(query) => query.filter('BUFFERED', 'GT', 0)}
+            >
+              <BufferingChart />
             </VideoStats>
             <VideoStats
               queryBuilder={queryBuilder}
