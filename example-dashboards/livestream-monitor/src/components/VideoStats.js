@@ -62,7 +62,10 @@ export default class VideoStats extends PureComponent {
       return rows.length === apiLimit ? [...rows, ...await fetchRows(offset + apiLimit)] : rows;
     };
 
-    const rows = await fetchRows();
+    let rows = await fetchRows();
+    if (dataProcessor) {
+      rows = dataProcessor(rows);
+    }
     const data = rows.sort((a, b) => a[0] - b[0]);
 
     this.setState({ data, loading: false });
