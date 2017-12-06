@@ -22,7 +22,7 @@ export default function ErrorChart({ loading, data, from, to, onSelectTimestamp,
   const sortedSeriesArray = seriesArray.sort((a, b) => a.name < b.name ? -1 : 1);
 
   const coloredSeriesArray = sortedSeriesArray.map((series, index) => {
-    const lightness = (75 - 35 * (index / seriesArray.length));
+    const lightness = (80 - 35 * (index / seriesArray.length));
     return { ...series, color: `hsl(3, 82%, ${lightness}%)`, cursor: 'pointer' };
   })
 
