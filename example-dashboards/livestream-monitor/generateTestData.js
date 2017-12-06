@@ -1,6 +1,6 @@
 const https = require('https');
 const request = require('request');
-const errors = require('./src/errors.js')
+const errors = require('./src/errors.js');
 
 const { ANALYTICS_KEY, PLAYER_KEY } = process.env;
 
@@ -11,8 +11,7 @@ const videoIds = [
   'steam-stream',
 ]
 
-generateTestData = () => {
-  const { errorCode, errorMessage } = errors[Math.floor(Math.random() * errors.length)];
+const analyticsMessage = ({ errorCode, errorMessage, buffered }) => {
   const videoId = videoIds[Math.floor(Math.random() * videoIds.length)];
   const impressionId = `${Math.floor(Math.random() * 5000)}`;
   const userId = `${Math.floor(Math.random() * 2000)}`;
@@ -21,7 +20,7 @@ generateTestData = () => {
     ad: 0,
     analyticsVersion: "v1.5.2",
     audioBitrate: 0,
-    buffered: 0,
+    buffered: buffered || 0,
     cdnProvider: "akamai",
     domain: "bitmovin-analytics-collector.dev",
     droppedFrames: 0,
@@ -67,6 +66,20 @@ generateTestData = () => {
     videoWindowHeight: 225,
     videoWindowWidth: 400
   });
+}
+
+const generateError = () => {
+  const { errorCode, errorMessage } = errors[Math.floor(Math.random() * errors.length)];
+  return analyticsMessage({ errorCode, errorMessage })
+}
+
+const generateBuffering = () => {
+  const buffered = Math.floor(Math.random() * 100000);
+  return analyticsMessage({ buffered });
+}
+
+const generateTestData = () => {
+  return Math.random() < 0.5 ? generateError() : generateBuffering();
 }
 
 const postTestData = () => {
