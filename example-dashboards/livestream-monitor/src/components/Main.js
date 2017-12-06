@@ -128,8 +128,7 @@ export default class Main extends Component {
               from={from}
               to={to}
               count="IMPRESSION_ID"
-              queryExtension={(query) => query.groupBy('ERROR_CODE')}
-              dataProcessor={(data) => data.filter(([timestamp, error, count]) => error !== null)}
+              queryExtension={(query) => query.groupBy('ERROR_CODE').filter('ERROR_CODE', 'GT', 0)}
             >
               <ErrorChart />
               <ErrorTable />
