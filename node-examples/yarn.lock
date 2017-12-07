@@ -9,13 +9,13 @@ babar@^0.1.0:
     colors "~0.6.2"
 
 bitmovin-javascript@^1.1.5:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/bitmovin-javascript/-/bitmovin-javascript-1.2.0.tgz#cbedf69bb6b19f12ccd0627671f38c0051a969f6"
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/bitmovin-javascript/-/bitmovin-javascript-1.6.0.tgz#cc34a05e1d1180bbeb609fa2f0a466cf860f563f"
 
 colors@~0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/colors/-/colors-0.6.2.tgz#2423fe6678ac0c5dae8852e5d0e5be08c997abcc"
 
 moment@^2.18.1:
-  version "2.19.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.1.tgz#56da1a2d1cbf01d38b7e1afc31c10bcfa1929167"
+  version "2.19.3"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.3.tgz#bdb99d270d6d7fda78cc0fbace855e27fe7da69f"
